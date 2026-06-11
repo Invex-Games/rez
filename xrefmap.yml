@@ -1,0 +1,581 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: Invex.Rez.Abstraction
+  name: Invex.Rez.Abstraction
+  href: api/Invex.Rez.Abstraction.html
+  commentId: N:Invex.Rez.Abstraction
+  fullName: Invex.Rez.Abstraction
+  nameWithType: Invex.Rez.Abstraction
+- uid: Invex.Rez.Abstraction.FunctionCall
+  name: FunctionCall
+  href: api/Invex.Rez.Abstraction.FunctionCall.html
+  commentId: T:Invex.Rez.Abstraction.FunctionCall
+  fullName: Invex.Rez.Abstraction.FunctionCall
+  nameWithType: FunctionCall
+- uid: Invex.Rez.Abstraction.FunctionCall.#ctor(System.String)
+  name: FunctionCall(string?)
+  href: api/Invex.Rez.Abstraction.FunctionCall.html#Invex_Rez_Abstraction_FunctionCall__ctor_System_String_
+  commentId: M:Invex.Rez.Abstraction.FunctionCall.#ctor(System.String)
+  name.vb: New(String)
+  fullName: Invex.Rez.Abstraction.FunctionCall.FunctionCall(string?)
+  fullName.vb: Invex.Rez.Abstraction.FunctionCall.New(String)
+  nameWithType: FunctionCall.FunctionCall(string?)
+  nameWithType.vb: FunctionCall.New(String)
+- uid: Invex.Rez.Abstraction.FunctionCall.#ctor*
+  name: FunctionCall
+  href: api/Invex.Rez.Abstraction.FunctionCall.html#Invex_Rez_Abstraction_FunctionCall__ctor_
+  commentId: Overload:Invex.Rez.Abstraction.FunctionCall.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Invex.Rez.Abstraction.FunctionCall.FunctionCall
+  fullName.vb: Invex.Rez.Abstraction.FunctionCall.New
+  nameWithType: FunctionCall.FunctionCall
+  nameWithType.vb: FunctionCall.New
+- uid: Invex.Rez.Abstraction.FunctionCall.Args
+  name: Args
+  href: api/Invex.Rez.Abstraction.FunctionCall.html#Invex_Rez_Abstraction_FunctionCall_Args
+  commentId: P:Invex.Rez.Abstraction.FunctionCall.Args
+  fullName: Invex.Rez.Abstraction.FunctionCall.Args
+  nameWithType: FunctionCall.Args
+- uid: Invex.Rez.Abstraction.FunctionCall.Args*
+  name: Args
+  href: api/Invex.Rez.Abstraction.FunctionCall.html#Invex_Rez_Abstraction_FunctionCall_Args_
+  commentId: Overload:Invex.Rez.Abstraction.FunctionCall.Args
+  isSpec: "True"
+  fullName: Invex.Rez.Abstraction.FunctionCall.Args
+  nameWithType: FunctionCall.Args
+- uid: Invex.Rez.Abstraction.IResolver
+  name: IResolver
+  href: api/Invex.Rez.Abstraction.IResolver.html
+  commentId: T:Invex.Rez.Abstraction.IResolver
+  fullName: Invex.Rez.Abstraction.IResolver
+  nameWithType: IResolver
+- uid: Invex.Rez.Abstraction.IResolver.AddSource(Invex.Rez.Abstraction.IResolverSource)
+  name: AddSource(IResolverSource)
+  href: api/Invex.Rez.Abstraction.IResolver.html#Invex_Rez_Abstraction_IResolver_AddSource_Invex_Rez_Abstraction_IResolverSource_
+  commentId: M:Invex.Rez.Abstraction.IResolver.AddSource(Invex.Rez.Abstraction.IResolverSource)
+  fullName: Invex.Rez.Abstraction.IResolver.AddSource(Invex.Rez.Abstraction.IResolverSource)
+  nameWithType: IResolver.AddSource(IResolverSource)
+- uid: Invex.Rez.Abstraction.IResolver.AddSource*
+  name: AddSource
+  href: api/Invex.Rez.Abstraction.IResolver.html#Invex_Rez_Abstraction_IResolver_AddSource_
+  commentId: Overload:Invex.Rez.Abstraction.IResolver.AddSource
+  isSpec: "True"
+  fullName: Invex.Rez.Abstraction.IResolver.AddSource
+  nameWithType: IResolver.AddSource
+- uid: Invex.Rez.Abstraction.IResolver.RemoveSource(Invex.Rez.Abstraction.IResolverSource)
+  name: RemoveSource(IResolverSource)
+  href: api/Invex.Rez.Abstraction.IResolver.html#Invex_Rez_Abstraction_IResolver_RemoveSource_Invex_Rez_Abstraction_IResolverSource_
+  commentId: M:Invex.Rez.Abstraction.IResolver.RemoveSource(Invex.Rez.Abstraction.IResolverSource)
+  fullName: Invex.Rez.Abstraction.IResolver.RemoveSource(Invex.Rez.Abstraction.IResolverSource)
+  nameWithType: IResolver.RemoveSource(IResolverSource)
+- uid: Invex.Rez.Abstraction.IResolver.RemoveSource*
+  name: RemoveSource
+  href: api/Invex.Rez.Abstraction.IResolver.html#Invex_Rez_Abstraction_IResolver_RemoveSource_
+  commentId: Overload:Invex.Rez.Abstraction.IResolver.RemoveSource
+  isSpec: "True"
+  fullName: Invex.Rez.Abstraction.IResolver.RemoveSource
+  nameWithType: IResolver.RemoveSource
+- uid: Invex.Rez.Abstraction.IResolver.Resolve(System.String)
+  name: Resolve(string?)
+  href: api/Invex.Rez.Abstraction.IResolver.html#Invex_Rez_Abstraction_IResolver_Resolve_System_String_
+  commentId: M:Invex.Rez.Abstraction.IResolver.Resolve(System.String)
+  name.vb: Resolve(String)
+  fullName: Invex.Rez.Abstraction.IResolver.Resolve(string?)
+  fullName.vb: Invex.Rez.Abstraction.IResolver.Resolve(String)
+  nameWithType: IResolver.Resolve(string?)
+  nameWithType.vb: IResolver.Resolve(String)
+- uid: Invex.Rez.Abstraction.IResolver.Resolve*
+  name: Resolve
+  href: api/Invex.Rez.Abstraction.IResolver.html#Invex_Rez_Abstraction_IResolver_Resolve_
+  commentId: Overload:Invex.Rez.Abstraction.IResolver.Resolve
+  isSpec: "True"
+  fullName: Invex.Rez.Abstraction.IResolver.Resolve
+  nameWithType: IResolver.Resolve
+- uid: Invex.Rez.Abstraction.IResolverSource
+  name: IResolverSource
+  href: api/Invex.Rez.Abstraction.IResolverSource.html
+  commentId: T:Invex.Rez.Abstraction.IResolverSource
+  fullName: Invex.Rez.Abstraction.IResolverSource
+  nameWithType: IResolverSource
+- uid: Invex.Rez.Abstraction.IResolverSource.ResolveFunction(System.String)
+  name: ResolveFunction(string)
+  href: api/Invex.Rez.Abstraction.IResolverSource.html#Invex_Rez_Abstraction_IResolverSource_ResolveFunction_System_String_
+  commentId: M:Invex.Rez.Abstraction.IResolverSource.ResolveFunction(System.String)
+  name.vb: ResolveFunction(String)
+  fullName: Invex.Rez.Abstraction.IResolverSource.ResolveFunction(string)
+  fullName.vb: Invex.Rez.Abstraction.IResolverSource.ResolveFunction(String)
+  nameWithType: IResolverSource.ResolveFunction(string)
+  nameWithType.vb: IResolverSource.ResolveFunction(String)
+- uid: Invex.Rez.Abstraction.IResolverSource.ResolveFunction*
+  name: ResolveFunction
+  href: api/Invex.Rez.Abstraction.IResolverSource.html#Invex_Rez_Abstraction_IResolverSource_ResolveFunction_
+  commentId: Overload:Invex.Rez.Abstraction.IResolverSource.ResolveFunction
+  isSpec: "True"
+  fullName: Invex.Rez.Abstraction.IResolverSource.ResolveFunction
+  nameWithType: IResolverSource.ResolveFunction
+- uid: Invex.Rez.Abstraction.IResolverSource.ResolveVariable(System.String)
+  name: ResolveVariable(string)
+  href: api/Invex.Rez.Abstraction.IResolverSource.html#Invex_Rez_Abstraction_IResolverSource_ResolveVariable_System_String_
+  commentId: M:Invex.Rez.Abstraction.IResolverSource.ResolveVariable(System.String)
+  name.vb: ResolveVariable(String)
+  fullName: Invex.Rez.Abstraction.IResolverSource.ResolveVariable(string)
+  fullName.vb: Invex.Rez.Abstraction.IResolverSource.ResolveVariable(String)
+  nameWithType: IResolverSource.ResolveVariable(string)
+  nameWithType.vb: IResolverSource.ResolveVariable(String)
+- uid: Invex.Rez.Abstraction.IResolverSource.ResolveVariable*
+  name: ResolveVariable
+  href: api/Invex.Rez.Abstraction.IResolverSource.html#Invex_Rez_Abstraction_IResolverSource_ResolveVariable_
+  commentId: Overload:Invex.Rez.Abstraction.IResolverSource.ResolveVariable
+  isSpec: "True"
+  fullName: Invex.Rez.Abstraction.IResolverSource.ResolveVariable
+  nameWithType: IResolverSource.ResolveVariable
+- uid: Invex.Rez.Abstraction.IResolverStore
+  name: IResolverStore
+  href: api/Invex.Rez.Abstraction.IResolverStore.html
+  commentId: T:Invex.Rez.Abstraction.IResolverStore
+  fullName: Invex.Rez.Abstraction.IResolverStore
+  nameWithType: IResolverStore
+- uid: Invex.Rez.Abstraction.IResolverStore.AddFunction(System.String,System.Func{Invex.Rez.Abstraction.FunctionCall,System.String})
+  name: AddFunction(string, Func<FunctionCall, string>)
+  href: api/Invex.Rez.Abstraction.IResolverStore.html#Invex_Rez_Abstraction_IResolverStore_AddFunction_System_String_System_Func_Invex_Rez_Abstraction_FunctionCall_System_String__
+  commentId: M:Invex.Rez.Abstraction.IResolverStore.AddFunction(System.String,System.Func{Invex.Rez.Abstraction.FunctionCall,System.String})
+  name.vb: AddFunction(String, Func(Of FunctionCall, String))
+  fullName: Invex.Rez.Abstraction.IResolverStore.AddFunction(string, System.Func<Invex.Rez.Abstraction.FunctionCall, string>)
+  fullName.vb: Invex.Rez.Abstraction.IResolverStore.AddFunction(String, System.Func(Of Invex.Rez.Abstraction.FunctionCall, String))
+  nameWithType: IResolverStore.AddFunction(string, Func<FunctionCall, string>)
+  nameWithType.vb: IResolverStore.AddFunction(String, Func(Of FunctionCall, String))
+- uid: Invex.Rez.Abstraction.IResolverStore.AddFunction*
+  name: AddFunction
+  href: api/Invex.Rez.Abstraction.IResolverStore.html#Invex_Rez_Abstraction_IResolverStore_AddFunction_
+  commentId: Overload:Invex.Rez.Abstraction.IResolverStore.AddFunction
+  isSpec: "True"
+  fullName: Invex.Rez.Abstraction.IResolverStore.AddFunction
+  nameWithType: IResolverStore.AddFunction
+- uid: Invex.Rez.Abstraction.IResolverStore.AddVariable(System.String,System.String)
+  name: AddVariable(string, string)
+  href: api/Invex.Rez.Abstraction.IResolverStore.html#Invex_Rez_Abstraction_IResolverStore_AddVariable_System_String_System_String_
+  commentId: M:Invex.Rez.Abstraction.IResolverStore.AddVariable(System.String,System.String)
+  name.vb: AddVariable(String, String)
+  fullName: Invex.Rez.Abstraction.IResolverStore.AddVariable(string, string)
+  fullName.vb: Invex.Rez.Abstraction.IResolverStore.AddVariable(String, String)
+  nameWithType: IResolverStore.AddVariable(string, string)
+  nameWithType.vb: IResolverStore.AddVariable(String, String)
+- uid: Invex.Rez.Abstraction.IResolverStore.AddVariable*
+  name: AddVariable
+  href: api/Invex.Rez.Abstraction.IResolverStore.html#Invex_Rez_Abstraction_IResolverStore_AddVariable_
+  commentId: Overload:Invex.Rez.Abstraction.IResolverStore.AddVariable
+  isSpec: "True"
+  fullName: Invex.Rez.Abstraction.IResolverStore.AddVariable
+  nameWithType: IResolverStore.AddVariable
+- uid: Invex.Rez.Abstraction.IResolverStore.RemoveFunction(System.String)
+  name: RemoveFunction(string)
+  href: api/Invex.Rez.Abstraction.IResolverStore.html#Invex_Rez_Abstraction_IResolverStore_RemoveFunction_System_String_
+  commentId: M:Invex.Rez.Abstraction.IResolverStore.RemoveFunction(System.String)
+  name.vb: RemoveFunction(String)
+  fullName: Invex.Rez.Abstraction.IResolverStore.RemoveFunction(string)
+  fullName.vb: Invex.Rez.Abstraction.IResolverStore.RemoveFunction(String)
+  nameWithType: IResolverStore.RemoveFunction(string)
+  nameWithType.vb: IResolverStore.RemoveFunction(String)
+- uid: Invex.Rez.Abstraction.IResolverStore.RemoveFunction*
+  name: RemoveFunction
+  href: api/Invex.Rez.Abstraction.IResolverStore.html#Invex_Rez_Abstraction_IResolverStore_RemoveFunction_
+  commentId: Overload:Invex.Rez.Abstraction.IResolverStore.RemoveFunction
+  isSpec: "True"
+  fullName: Invex.Rez.Abstraction.IResolverStore.RemoveFunction
+  nameWithType: IResolverStore.RemoveFunction
+- uid: Invex.Rez.Abstraction.IResolverStore.RemoveVariable(System.String)
+  name: RemoveVariable(string)
+  href: api/Invex.Rez.Abstraction.IResolverStore.html#Invex_Rez_Abstraction_IResolverStore_RemoveVariable_System_String_
+  commentId: M:Invex.Rez.Abstraction.IResolverStore.RemoveVariable(System.String)
+  name.vb: RemoveVariable(String)
+  fullName: Invex.Rez.Abstraction.IResolverStore.RemoveVariable(string)
+  fullName.vb: Invex.Rez.Abstraction.IResolverStore.RemoveVariable(String)
+  nameWithType: IResolverStore.RemoveVariable(string)
+  nameWithType.vb: IResolverStore.RemoveVariable(String)
+- uid: Invex.Rez.Abstraction.IResolverStore.RemoveVariable*
+  name: RemoveVariable
+  href: api/Invex.Rez.Abstraction.IResolverStore.html#Invex_Rez_Abstraction_IResolverStore_RemoveVariable_
+  commentId: Overload:Invex.Rez.Abstraction.IResolverStore.RemoveVariable
+  isSpec: "True"
+  fullName: Invex.Rez.Abstraction.IResolverStore.RemoveVariable
+  nameWithType: IResolverStore.RemoveVariable
+- uid: Invex.Rez.Configuration
+  name: Invex.Rez.Configuration
+  href: api/Invex.Rez.Configuration.html
+  commentId: N:Invex.Rez.Configuration
+  fullName: Invex.Rez.Configuration
+  nameWithType: Invex.Rez.Configuration
+- uid: Invex.Rez.Configuration.ConfigResolverSource
+  name: ConfigResolverSource
+  href: api/Invex.Rez.Configuration.ConfigResolverSource.html
+  commentId: T:Invex.Rez.Configuration.ConfigResolverSource
+  fullName: Invex.Rez.Configuration.ConfigResolverSource
+  nameWithType: ConfigResolverSource
+- uid: Invex.Rez.Configuration.ConfigResolverSource.#ctor(Microsoft.Extensions.Configuration.IConfigurationRoot)
+  name: ConfigResolverSource(IConfigurationRoot)
+  href: api/Invex.Rez.Configuration.ConfigResolverSource.html#Invex_Rez_Configuration_ConfigResolverSource__ctor_Microsoft_Extensions_Configuration_IConfigurationRoot_
+  commentId: M:Invex.Rez.Configuration.ConfigResolverSource.#ctor(Microsoft.Extensions.Configuration.IConfigurationRoot)
+  name.vb: New(IConfigurationRoot)
+  fullName: Invex.Rez.Configuration.ConfigResolverSource.ConfigResolverSource(Microsoft.Extensions.Configuration.IConfigurationRoot)
+  fullName.vb: Invex.Rez.Configuration.ConfigResolverSource.New(Microsoft.Extensions.Configuration.IConfigurationRoot)
+  nameWithType: ConfigResolverSource.ConfigResolverSource(IConfigurationRoot)
+  nameWithType.vb: ConfigResolverSource.New(IConfigurationRoot)
+- uid: Invex.Rez.Configuration.ConfigResolverSource.#ctor*
+  name: ConfigResolverSource
+  href: api/Invex.Rez.Configuration.ConfigResolverSource.html#Invex_Rez_Configuration_ConfigResolverSource__ctor_
+  commentId: Overload:Invex.Rez.Configuration.ConfigResolverSource.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Invex.Rez.Configuration.ConfigResolverSource.ConfigResolverSource
+  fullName.vb: Invex.Rez.Configuration.ConfigResolverSource.New
+  nameWithType: ConfigResolverSource.ConfigResolverSource
+  nameWithType.vb: ConfigResolverSource.New
+- uid: Invex.Rez.Configuration.ConfigResolverSource.ResolveFunction(System.String)
+  name: ResolveFunction(string)
+  href: api/Invex.Rez.Configuration.ConfigResolverSource.html#Invex_Rez_Configuration_ConfigResolverSource_ResolveFunction_System_String_
+  commentId: M:Invex.Rez.Configuration.ConfigResolverSource.ResolveFunction(System.String)
+  name.vb: ResolveFunction(String)
+  fullName: Invex.Rez.Configuration.ConfigResolverSource.ResolveFunction(string)
+  fullName.vb: Invex.Rez.Configuration.ConfigResolverSource.ResolveFunction(String)
+  nameWithType: ConfigResolverSource.ResolveFunction(string)
+  nameWithType.vb: ConfigResolverSource.ResolveFunction(String)
+- uid: Invex.Rez.Configuration.ConfigResolverSource.ResolveFunction*
+  name: ResolveFunction
+  href: api/Invex.Rez.Configuration.ConfigResolverSource.html#Invex_Rez_Configuration_ConfigResolverSource_ResolveFunction_
+  commentId: Overload:Invex.Rez.Configuration.ConfigResolverSource.ResolveFunction
+  isSpec: "True"
+  fullName: Invex.Rez.Configuration.ConfigResolverSource.ResolveFunction
+  nameWithType: ConfigResolverSource.ResolveFunction
+- uid: Invex.Rez.Configuration.ConfigResolverSource.ResolveVariable(System.String)
+  name: ResolveVariable(string)
+  href: api/Invex.Rez.Configuration.ConfigResolverSource.html#Invex_Rez_Configuration_ConfigResolverSource_ResolveVariable_System_String_
+  commentId: M:Invex.Rez.Configuration.ConfigResolverSource.ResolveVariable(System.String)
+  name.vb: ResolveVariable(String)
+  fullName: Invex.Rez.Configuration.ConfigResolverSource.ResolveVariable(string)
+  fullName.vb: Invex.Rez.Configuration.ConfigResolverSource.ResolveVariable(String)
+  nameWithType: ConfigResolverSource.ResolveVariable(string)
+  nameWithType.vb: ConfigResolverSource.ResolveVariable(String)
+- uid: Invex.Rez.Configuration.ConfigResolverSource.ResolveVariable*
+  name: ResolveVariable
+  href: api/Invex.Rez.Configuration.ConfigResolverSource.html#Invex_Rez_Configuration_ConfigResolverSource_ResolveVariable_
+  commentId: Overload:Invex.Rez.Configuration.ConfigResolverSource.ResolveVariable
+  isSpec: "True"
+  fullName: Invex.Rez.Configuration.ConfigResolverSource.ResolveVariable
+  nameWithType: ConfigResolverSource.ResolveVariable
+- uid: Invex.Rez.Configuration.IResolvableConfig
+  name: IResolvableConfig
+  href: api/Invex.Rez.Configuration.IResolvableConfig.html
+  commentId: T:Invex.Rez.Configuration.IResolvableConfig
+  fullName: Invex.Rez.Configuration.IResolvableConfig
+  nameWithType: IResolvableConfig
+- uid: Invex.Rez.Configuration.IResolvableConfig.Resolve(System.String)
+  name: Resolve(string?)
+  href: api/Invex.Rez.Configuration.IResolvableConfig.html#Invex_Rez_Configuration_IResolvableConfig_Resolve_System_String_
+  commentId: M:Invex.Rez.Configuration.IResolvableConfig.Resolve(System.String)
+  name.vb: Resolve(String)
+  fullName: Invex.Rez.Configuration.IResolvableConfig.Resolve(string?)
+  fullName.vb: Invex.Rez.Configuration.IResolvableConfig.Resolve(String)
+  nameWithType: IResolvableConfig.Resolve(string?)
+  nameWithType.vb: IResolvableConfig.Resolve(String)
+- uid: Invex.Rez.Configuration.IResolvableConfig.Resolve*
+  name: Resolve
+  href: api/Invex.Rez.Configuration.IResolvableConfig.html#Invex_Rez_Configuration_IResolvableConfig_Resolve_
+  commentId: Overload:Invex.Rez.Configuration.IResolvableConfig.Resolve
+  isSpec: "True"
+  fullName: Invex.Rez.Configuration.IResolvableConfig.Resolve
+  nameWithType: IResolvableConfig.Resolve
+- uid: Invex.Rez.Configuration.IResolvableConfig.Resolver
+  name: Resolver
+  href: api/Invex.Rez.Configuration.IResolvableConfig.html#Invex_Rez_Configuration_IResolvableConfig_Resolver
+  commentId: P:Invex.Rez.Configuration.IResolvableConfig.Resolver
+  fullName: Invex.Rez.Configuration.IResolvableConfig.Resolver
+  nameWithType: IResolvableConfig.Resolver
+- uid: Invex.Rez.Configuration.IResolvableConfig.Resolver*
+  name: Resolver
+  href: api/Invex.Rez.Configuration.IResolvableConfig.html#Invex_Rez_Configuration_IResolvableConfig_Resolver_
+  commentId: Overload:Invex.Rez.Configuration.IResolvableConfig.Resolver
+  isSpec: "True"
+  fullName: Invex.Rez.Configuration.IResolvableConfig.Resolver
+  nameWithType: IResolvableConfig.Resolver
+- uid: Invex.Rez.Configuration.Setup
+  name: Setup
+  href: api/Invex.Rez.Configuration.Setup.html
+  commentId: T:Invex.Rez.Configuration.Setup
+  fullName: Invex.Rez.Configuration.Setup
+  nameWithType: Setup
+- uid: Invex.Rez.Configuration.Setup.AddResolvableConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name: AddResolvableConfiguration(IServiceCollection)
+  href: api/Invex.Rez.Configuration.Setup.html#Invex_Rez_Configuration_Setup_AddResolvableConfiguration_Microsoft_Extensions_DependencyInjection_IServiceCollection_
+  commentId: M:Invex.Rez.Configuration.Setup.AddResolvableConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName: Invex.Rez.Configuration.Setup.AddResolvableConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  nameWithType: Setup.AddResolvableConfiguration(IServiceCollection)
+- uid: Invex.Rez.Configuration.Setup.AddResolvableConfiguration*
+  name: AddResolvableConfiguration
+  href: api/Invex.Rez.Configuration.Setup.html#Invex_Rez_Configuration_Setup_AddResolvableConfiguration_
+  commentId: Overload:Invex.Rez.Configuration.Setup.AddResolvableConfiguration
+  isSpec: "True"
+  fullName: Invex.Rez.Configuration.Setup.AddResolvableConfiguration
+  nameWithType: Setup.AddResolvableConfiguration
+- uid: Invex.Rez.Implementation
+  name: Invex.Rez.Implementation
+  href: api/Invex.Rez.Implementation.html
+  commentId: N:Invex.Rez.Implementation
+  fullName: Invex.Rez.Implementation
+  nameWithType: Invex.Rez.Implementation
+- uid: Invex.Rez.Implementation.Resolver
+  name: Resolver
+  href: api/Invex.Rez.Implementation.Resolver.html
+  commentId: T:Invex.Rez.Implementation.Resolver
+  fullName: Invex.Rez.Implementation.Resolver
+  nameWithType: Resolver
+- uid: Invex.Rez.Implementation.Resolver.AddSource(Invex.Rez.Abstraction.IResolverSource)
+  name: AddSource(IResolverSource)
+  href: api/Invex.Rez.Implementation.Resolver.html#Invex_Rez_Implementation_Resolver_AddSource_Invex_Rez_Abstraction_IResolverSource_
+  commentId: M:Invex.Rez.Implementation.Resolver.AddSource(Invex.Rez.Abstraction.IResolverSource)
+  fullName: Invex.Rez.Implementation.Resolver.AddSource(Invex.Rez.Abstraction.IResolverSource)
+  nameWithType: Resolver.AddSource(IResolverSource)
+- uid: Invex.Rez.Implementation.Resolver.AddSource*
+  name: AddSource
+  href: api/Invex.Rez.Implementation.Resolver.html#Invex_Rez_Implementation_Resolver_AddSource_
+  commentId: Overload:Invex.Rez.Implementation.Resolver.AddSource
+  isSpec: "True"
+  fullName: Invex.Rez.Implementation.Resolver.AddSource
+  nameWithType: Resolver.AddSource
+- uid: Invex.Rez.Implementation.Resolver.RemoveSource(Invex.Rez.Abstraction.IResolverSource)
+  name: RemoveSource(IResolverSource)
+  href: api/Invex.Rez.Implementation.Resolver.html#Invex_Rez_Implementation_Resolver_RemoveSource_Invex_Rez_Abstraction_IResolverSource_
+  commentId: M:Invex.Rez.Implementation.Resolver.RemoveSource(Invex.Rez.Abstraction.IResolverSource)
+  fullName: Invex.Rez.Implementation.Resolver.RemoveSource(Invex.Rez.Abstraction.IResolverSource)
+  nameWithType: Resolver.RemoveSource(IResolverSource)
+- uid: Invex.Rez.Implementation.Resolver.RemoveSource*
+  name: RemoveSource
+  href: api/Invex.Rez.Implementation.Resolver.html#Invex_Rez_Implementation_Resolver_RemoveSource_
+  commentId: Overload:Invex.Rez.Implementation.Resolver.RemoveSource
+  isSpec: "True"
+  fullName: Invex.Rez.Implementation.Resolver.RemoveSource
+  nameWithType: Resolver.RemoveSource
+- uid: Invex.Rez.Implementation.Resolver.Resolve(System.String)
+  name: Resolve(string?)
+  href: api/Invex.Rez.Implementation.Resolver.html#Invex_Rez_Implementation_Resolver_Resolve_System_String_
+  commentId: M:Invex.Rez.Implementation.Resolver.Resolve(System.String)
+  name.vb: Resolve(String)
+  fullName: Invex.Rez.Implementation.Resolver.Resolve(string?)
+  fullName.vb: Invex.Rez.Implementation.Resolver.Resolve(String)
+  nameWithType: Resolver.Resolve(string?)
+  nameWithType.vb: Resolver.Resolve(String)
+- uid: Invex.Rez.Implementation.Resolver.Resolve*
+  name: Resolve
+  href: api/Invex.Rez.Implementation.Resolver.html#Invex_Rez_Implementation_Resolver_Resolve_
+  commentId: Overload:Invex.Rez.Implementation.Resolver.Resolve
+  isSpec: "True"
+  fullName: Invex.Rez.Implementation.Resolver.Resolve
+  nameWithType: Resolver.Resolve
+- uid: Invex.Rez.Implementation.ResolverSource
+  name: ResolverSource
+  href: api/Invex.Rez.Implementation.ResolverSource.html
+  commentId: T:Invex.Rez.Implementation.ResolverSource
+  fullName: Invex.Rez.Implementation.ResolverSource
+  nameWithType: ResolverSource
+- uid: Invex.Rez.Implementation.ResolverSource.#ctor(System.Collections.Generic.Dictionary{System.String,System.Func{Invex.Rez.Abstraction.FunctionCall,System.String}})
+  name: ResolverSource(Dictionary<string, Func<FunctionCall, string>>)
+  href: api/Invex.Rez.Implementation.ResolverSource.html#Invex_Rez_Implementation_ResolverSource__ctor_System_Collections_Generic_Dictionary_System_String_System_Func_Invex_Rez_Abstraction_FunctionCall_System_String___
+  commentId: M:Invex.Rez.Implementation.ResolverSource.#ctor(System.Collections.Generic.Dictionary{System.String,System.Func{Invex.Rez.Abstraction.FunctionCall,System.String}})
+  name.vb: New(Dictionary(Of String, Func(Of FunctionCall, String)))
+  fullName: Invex.Rez.Implementation.ResolverSource.ResolverSource(System.Collections.Generic.Dictionary<string, System.Func<Invex.Rez.Abstraction.FunctionCall, string>>)
+  fullName.vb: Invex.Rez.Implementation.ResolverSource.New(System.Collections.Generic.Dictionary(Of String, System.Func(Of Invex.Rez.Abstraction.FunctionCall, String)))
+  nameWithType: ResolverSource.ResolverSource(Dictionary<string, Func<FunctionCall, string>>)
+  nameWithType.vb: ResolverSource.New(Dictionary(Of String, Func(Of FunctionCall, String)))
+- uid: Invex.Rez.Implementation.ResolverSource.#ctor(System.Collections.Generic.Dictionary{System.String,System.String})
+  name: ResolverSource(Dictionary<string, string>)
+  href: api/Invex.Rez.Implementation.ResolverSource.html#Invex_Rez_Implementation_ResolverSource__ctor_System_Collections_Generic_Dictionary_System_String_System_String__
+  commentId: M:Invex.Rez.Implementation.ResolverSource.#ctor(System.Collections.Generic.Dictionary{System.String,System.String})
+  name.vb: New(Dictionary(Of String, String))
+  fullName: Invex.Rez.Implementation.ResolverSource.ResolverSource(System.Collections.Generic.Dictionary<string, string>)
+  fullName.vb: Invex.Rez.Implementation.ResolverSource.New(System.Collections.Generic.Dictionary(Of String, String))
+  nameWithType: ResolverSource.ResolverSource(Dictionary<string, string>)
+  nameWithType.vb: ResolverSource.New(Dictionary(Of String, String))
+- uid: Invex.Rez.Implementation.ResolverSource.#ctor(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.Func{Invex.Rez.Abstraction.FunctionCall,System.String}})
+  name: ResolverSource(Dictionary<string, string>, Dictionary<string, Func<FunctionCall, string>>)
+  href: api/Invex.Rez.Implementation.ResolverSource.html#Invex_Rez_Implementation_ResolverSource__ctor_System_Collections_Generic_Dictionary_System_String_System_String__System_Collections_Generic_Dictionary_System_String_System_Func_Invex_Rez_Abstraction_FunctionCall_System_String___
+  commentId: M:Invex.Rez.Implementation.ResolverSource.#ctor(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.Func{Invex.Rez.Abstraction.FunctionCall,System.String}})
+  name.vb: New(Dictionary(Of String, String), Dictionary(Of String, Func(Of FunctionCall, String)))
+  fullName: Invex.Rez.Implementation.ResolverSource.ResolverSource(System.Collections.Generic.Dictionary<string, string>, System.Collections.Generic.Dictionary<string, System.Func<Invex.Rez.Abstraction.FunctionCall, string>>)
+  fullName.vb: Invex.Rez.Implementation.ResolverSource.New(System.Collections.Generic.Dictionary(Of String, String), System.Collections.Generic.Dictionary(Of String, System.Func(Of Invex.Rez.Abstraction.FunctionCall, String)))
+  nameWithType: ResolverSource.ResolverSource(Dictionary<string, string>, Dictionary<string, Func<FunctionCall, string>>)
+  nameWithType.vb: ResolverSource.New(Dictionary(Of String, String), Dictionary(Of String, Func(Of FunctionCall, String)))
+- uid: Invex.Rez.Implementation.ResolverSource.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Func{Invex.Rez.Abstraction.FunctionCall,System.String}}})
+  name: ResolverSource(IEnumerable<KeyValuePair<string, Func<FunctionCall, string>>>)
+  href: api/Invex.Rez.Implementation.ResolverSource.html#Invex_Rez_Implementation_ResolverSource__ctor_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_Func_Invex_Rez_Abstraction_FunctionCall_System_String____
+  commentId: M:Invex.Rez.Implementation.ResolverSource.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Func{Invex.Rez.Abstraction.FunctionCall,System.String}}})
+  name.vb: New(IEnumerable(Of KeyValuePair(Of String, Func(Of FunctionCall, String))))
+  fullName: Invex.Rez.Implementation.ResolverSource.ResolverSource(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Func<Invex.Rez.Abstraction.FunctionCall, string>>>)
+  fullName.vb: Invex.Rez.Implementation.ResolverSource.New(System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of String, System.Func(Of Invex.Rez.Abstraction.FunctionCall, String))))
+  nameWithType: ResolverSource.ResolverSource(IEnumerable<KeyValuePair<string, Func<FunctionCall, string>>>)
+  nameWithType.vb: ResolverSource.New(IEnumerable(Of KeyValuePair(Of String, Func(Of FunctionCall, String))))
+- uid: Invex.Rez.Implementation.ResolverSource.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})
+  name: ResolverSource(IEnumerable<KeyValuePair<string, string>>)
+  href: api/Invex.Rez.Implementation.ResolverSource.html#Invex_Rez_Implementation_ResolverSource__ctor_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_String___
+  commentId: M:Invex.Rez.Implementation.ResolverSource.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})
+  name.vb: New(IEnumerable(Of KeyValuePair(Of String, String)))
+  fullName: Invex.Rez.Implementation.ResolverSource.ResolverSource(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>)
+  fullName.vb: Invex.Rez.Implementation.ResolverSource.New(System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of String, String)))
+  nameWithType: ResolverSource.ResolverSource(IEnumerable<KeyValuePair<string, string>>)
+  nameWithType.vb: ResolverSource.New(IEnumerable(Of KeyValuePair(Of String, String)))
+- uid: Invex.Rez.Implementation.ResolverSource.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Func{Invex.Rez.Abstraction.FunctionCall,System.String}}})
+  name: ResolverSource(IEnumerable<KeyValuePair<string, string>>, IEnumerable<KeyValuePair<string, Func<FunctionCall, string>>>)
+  href: api/Invex.Rez.Implementation.ResolverSource.html#Invex_Rez_Implementation_ResolverSource__ctor_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_String___System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_Func_Invex_Rez_Abstraction_FunctionCall_System_String____
+  commentId: M:Invex.Rez.Implementation.ResolverSource.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Func{Invex.Rez.Abstraction.FunctionCall,System.String}}})
+  name.vb: New(IEnumerable(Of KeyValuePair(Of String, String)), IEnumerable(Of KeyValuePair(Of String, Func(Of FunctionCall, String))))
+  fullName: Invex.Rez.Implementation.ResolverSource.ResolverSource(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Func<Invex.Rez.Abstraction.FunctionCall, string>>>)
+  fullName.vb: Invex.Rez.Implementation.ResolverSource.New(System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of String, String)), System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of String, System.Func(Of Invex.Rez.Abstraction.FunctionCall, String))))
+  nameWithType: ResolverSource.ResolverSource(IEnumerable<KeyValuePair<string, string>>, IEnumerable<KeyValuePair<string, Func<FunctionCall, string>>>)
+  nameWithType.vb: ResolverSource.New(IEnumerable(Of KeyValuePair(Of String, String)), IEnumerable(Of KeyValuePair(Of String, Func(Of FunctionCall, String))))
+- uid: Invex.Rez.Implementation.ResolverSource.#ctor*
+  name: ResolverSource
+  href: api/Invex.Rez.Implementation.ResolverSource.html#Invex_Rez_Implementation_ResolverSource__ctor_
+  commentId: Overload:Invex.Rez.Implementation.ResolverSource.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Invex.Rez.Implementation.ResolverSource.ResolverSource
+  fullName.vb: Invex.Rez.Implementation.ResolverSource.New
+  nameWithType: ResolverSource.ResolverSource
+  nameWithType.vb: ResolverSource.New
+- uid: Invex.Rez.Implementation.ResolverSource.ResolveFunction(System.String)
+  name: ResolveFunction(string)
+  href: api/Invex.Rez.Implementation.ResolverSource.html#Invex_Rez_Implementation_ResolverSource_ResolveFunction_System_String_
+  commentId: M:Invex.Rez.Implementation.ResolverSource.ResolveFunction(System.String)
+  name.vb: ResolveFunction(String)
+  fullName: Invex.Rez.Implementation.ResolverSource.ResolveFunction(string)
+  fullName.vb: Invex.Rez.Implementation.ResolverSource.ResolveFunction(String)
+  nameWithType: ResolverSource.ResolveFunction(string)
+  nameWithType.vb: ResolverSource.ResolveFunction(String)
+- uid: Invex.Rez.Implementation.ResolverSource.ResolveFunction*
+  name: ResolveFunction
+  href: api/Invex.Rez.Implementation.ResolverSource.html#Invex_Rez_Implementation_ResolverSource_ResolveFunction_
+  commentId: Overload:Invex.Rez.Implementation.ResolverSource.ResolveFunction
+  isSpec: "True"
+  fullName: Invex.Rez.Implementation.ResolverSource.ResolveFunction
+  nameWithType: ResolverSource.ResolveFunction
+- uid: Invex.Rez.Implementation.ResolverSource.ResolveVariable(System.String)
+  name: ResolveVariable(string)
+  href: api/Invex.Rez.Implementation.ResolverSource.html#Invex_Rez_Implementation_ResolverSource_ResolveVariable_System_String_
+  commentId: M:Invex.Rez.Implementation.ResolverSource.ResolveVariable(System.String)
+  name.vb: ResolveVariable(String)
+  fullName: Invex.Rez.Implementation.ResolverSource.ResolveVariable(string)
+  fullName.vb: Invex.Rez.Implementation.ResolverSource.ResolveVariable(String)
+  nameWithType: ResolverSource.ResolveVariable(string)
+  nameWithType.vb: ResolverSource.ResolveVariable(String)
+- uid: Invex.Rez.Implementation.ResolverSource.ResolveVariable*
+  name: ResolveVariable
+  href: api/Invex.Rez.Implementation.ResolverSource.html#Invex_Rez_Implementation_ResolverSource_ResolveVariable_
+  commentId: Overload:Invex.Rez.Implementation.ResolverSource.ResolveVariable
+  isSpec: "True"
+  fullName: Invex.Rez.Implementation.ResolverSource.ResolveVariable
+  nameWithType: ResolverSource.ResolveVariable
+- uid: Invex.Rez.Implementation.ResolverStore
+  name: ResolverStore
+  href: api/Invex.Rez.Implementation.ResolverStore.html
+  commentId: T:Invex.Rez.Implementation.ResolverStore
+  fullName: Invex.Rez.Implementation.ResolverStore
+  nameWithType: ResolverStore
+- uid: Invex.Rez.Implementation.ResolverStore.AddFunction(System.String,System.Func{Invex.Rez.Abstraction.FunctionCall,System.String})
+  name: AddFunction(string, Func<FunctionCall, string>)
+  href: api/Invex.Rez.Implementation.ResolverStore.html#Invex_Rez_Implementation_ResolverStore_AddFunction_System_String_System_Func_Invex_Rez_Abstraction_FunctionCall_System_String__
+  commentId: M:Invex.Rez.Implementation.ResolverStore.AddFunction(System.String,System.Func{Invex.Rez.Abstraction.FunctionCall,System.String})
+  name.vb: AddFunction(String, Func(Of FunctionCall, String))
+  fullName: Invex.Rez.Implementation.ResolverStore.AddFunction(string, System.Func<Invex.Rez.Abstraction.FunctionCall, string>)
+  fullName.vb: Invex.Rez.Implementation.ResolverStore.AddFunction(String, System.Func(Of Invex.Rez.Abstraction.FunctionCall, String))
+  nameWithType: ResolverStore.AddFunction(string, Func<FunctionCall, string>)
+  nameWithType.vb: ResolverStore.AddFunction(String, Func(Of FunctionCall, String))
+- uid: Invex.Rez.Implementation.ResolverStore.AddFunction*
+  name: AddFunction
+  href: api/Invex.Rez.Implementation.ResolverStore.html#Invex_Rez_Implementation_ResolverStore_AddFunction_
+  commentId: Overload:Invex.Rez.Implementation.ResolverStore.AddFunction
+  isSpec: "True"
+  fullName: Invex.Rez.Implementation.ResolverStore.AddFunction
+  nameWithType: ResolverStore.AddFunction
+- uid: Invex.Rez.Implementation.ResolverStore.AddVariable(System.String,System.String)
+  name: AddVariable(string, string)
+  href: api/Invex.Rez.Implementation.ResolverStore.html#Invex_Rez_Implementation_ResolverStore_AddVariable_System_String_System_String_
+  commentId: M:Invex.Rez.Implementation.ResolverStore.AddVariable(System.String,System.String)
+  name.vb: AddVariable(String, String)
+  fullName: Invex.Rez.Implementation.ResolverStore.AddVariable(string, string)
+  fullName.vb: Invex.Rez.Implementation.ResolverStore.AddVariable(String, String)
+  nameWithType: ResolverStore.AddVariable(string, string)
+  nameWithType.vb: ResolverStore.AddVariable(String, String)
+- uid: Invex.Rez.Implementation.ResolverStore.AddVariable*
+  name: AddVariable
+  href: api/Invex.Rez.Implementation.ResolverStore.html#Invex_Rez_Implementation_ResolverStore_AddVariable_
+  commentId: Overload:Invex.Rez.Implementation.ResolverStore.AddVariable
+  isSpec: "True"
+  fullName: Invex.Rez.Implementation.ResolverStore.AddVariable
+  nameWithType: ResolverStore.AddVariable
+- uid: Invex.Rez.Implementation.ResolverStore.RemoveFunction(System.String)
+  name: RemoveFunction(string)
+  href: api/Invex.Rez.Implementation.ResolverStore.html#Invex_Rez_Implementation_ResolverStore_RemoveFunction_System_String_
+  commentId: M:Invex.Rez.Implementation.ResolverStore.RemoveFunction(System.String)
+  name.vb: RemoveFunction(String)
+  fullName: Invex.Rez.Implementation.ResolverStore.RemoveFunction(string)
+  fullName.vb: Invex.Rez.Implementation.ResolverStore.RemoveFunction(String)
+  nameWithType: ResolverStore.RemoveFunction(string)
+  nameWithType.vb: ResolverStore.RemoveFunction(String)
+- uid: Invex.Rez.Implementation.ResolverStore.RemoveFunction*
+  name: RemoveFunction
+  href: api/Invex.Rez.Implementation.ResolverStore.html#Invex_Rez_Implementation_ResolverStore_RemoveFunction_
+  commentId: Overload:Invex.Rez.Implementation.ResolverStore.RemoveFunction
+  isSpec: "True"
+  fullName: Invex.Rez.Implementation.ResolverStore.RemoveFunction
+  nameWithType: ResolverStore.RemoveFunction
+- uid: Invex.Rez.Implementation.ResolverStore.RemoveVariable(System.String)
+  name: RemoveVariable(string)
+  href: api/Invex.Rez.Implementation.ResolverStore.html#Invex_Rez_Implementation_ResolverStore_RemoveVariable_System_String_
+  commentId: M:Invex.Rez.Implementation.ResolverStore.RemoveVariable(System.String)
+  name.vb: RemoveVariable(String)
+  fullName: Invex.Rez.Implementation.ResolverStore.RemoveVariable(string)
+  fullName.vb: Invex.Rez.Implementation.ResolverStore.RemoveVariable(String)
+  nameWithType: ResolverStore.RemoveVariable(string)
+  nameWithType.vb: ResolverStore.RemoveVariable(String)
+- uid: Invex.Rez.Implementation.ResolverStore.RemoveVariable*
+  name: RemoveVariable
+  href: api/Invex.Rez.Implementation.ResolverStore.html#Invex_Rez_Implementation_ResolverStore_RemoveVariable_
+  commentId: Overload:Invex.Rez.Implementation.ResolverStore.RemoveVariable
+  isSpec: "True"
+  fullName: Invex.Rez.Implementation.ResolverStore.RemoveVariable
+  nameWithType: ResolverStore.RemoveVariable
+- uid: Invex.Rez.Implementation.ResolverStore.ResolveFunction(System.String)
+  name: ResolveFunction(string)
+  href: api/Invex.Rez.Implementation.ResolverStore.html#Invex_Rez_Implementation_ResolverStore_ResolveFunction_System_String_
+  commentId: M:Invex.Rez.Implementation.ResolverStore.ResolveFunction(System.String)
+  name.vb: ResolveFunction(String)
+  fullName: Invex.Rez.Implementation.ResolverStore.ResolveFunction(string)
+  fullName.vb: Invex.Rez.Implementation.ResolverStore.ResolveFunction(String)
+  nameWithType: ResolverStore.ResolveFunction(string)
+  nameWithType.vb: ResolverStore.ResolveFunction(String)
+- uid: Invex.Rez.Implementation.ResolverStore.ResolveFunction*
+  name: ResolveFunction
+  href: api/Invex.Rez.Implementation.ResolverStore.html#Invex_Rez_Implementation_ResolverStore_ResolveFunction_
+  commentId: Overload:Invex.Rez.Implementation.ResolverStore.ResolveFunction
+  isSpec: "True"
+  fullName: Invex.Rez.Implementation.ResolverStore.ResolveFunction
+  nameWithType: ResolverStore.ResolveFunction
+- uid: Invex.Rez.Implementation.ResolverStore.ResolveVariable(System.String)
+  name: ResolveVariable(string)
+  href: api/Invex.Rez.Implementation.ResolverStore.html#Invex_Rez_Implementation_ResolverStore_ResolveVariable_System_String_
+  commentId: M:Invex.Rez.Implementation.ResolverStore.ResolveVariable(System.String)
+  name.vb: ResolveVariable(String)
+  fullName: Invex.Rez.Implementation.ResolverStore.ResolveVariable(string)
+  fullName.vb: Invex.Rez.Implementation.ResolverStore.ResolveVariable(String)
+  nameWithType: ResolverStore.ResolveVariable(string)
+  nameWithType.vb: ResolverStore.ResolveVariable(String)
+- uid: Invex.Rez.Implementation.ResolverStore.ResolveVariable*
+  name: ResolveVariable
+  href: api/Invex.Rez.Implementation.ResolverStore.html#Invex_Rez_Implementation_ResolverStore_ResolveVariable_
+  commentId: Overload:Invex.Rez.Implementation.ResolverStore.ResolveVariable
+  isSpec: "True"
+  fullName: Invex.Rez.Implementation.ResolverStore.ResolveVariable
+  nameWithType: ResolverStore.ResolveVariable
+- uid: index
+  name: index
+  href: index.html

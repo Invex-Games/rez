@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Developer Guide | Invex.Rez </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Developer Guide | Invex.Rez ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Invex-Games/rez/blob/main/docs/developer-guide.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Invex.Rez">
+            Invex.Rez
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="developer-guide">Developer Guide</h1>
+
+<p>Rez allows you to resolve variables and functions embedded within strings, making it easier to
+dynamically generate text. This guide explains the library's abstractions, the built-in
+implementations, and how to extend Rez with custom sources.</p>
+<h2 id="architecture-at-a-glance">Architecture at a glance</h2>
+<pre><code>            ┌────────────────────────────────────────────┐
+ template ─►│ IResolver (Resolver)                       │─► output
+            │                                            │
+            │   queries sources in order, first match    │
+            │   wins, repeats until output stabilizes    │
+            └──────┬─────────────┬─────────────┬─────────┘
+                   ▼             ▼             ▼
+            IResolverSource  IResolverSource  IResolverSource
+            (ResolverSource) (ResolverStore)  (ConfigResolverSource, custom, ...)
+</code></pre>
+<h2 id="core-abstractions">Core abstractions</h2>
+<p>All abstractions live in the <code>Invex.Rez.Abstraction</code> namespace.</p>
+<h3 id="iresolver"><code>IResolver</code></h3>
+<p>The entry point. Resolves variables and functions in a template into an output string.</p>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AddSource(IResolverSource)</code></td>
+<td>Registers a source. Order matters — sources are queried in registration order. Returns the resolver for chaining.</td>
+</tr>
+<tr>
+<td><code>RemoveSource(IResolverSource)</code></td>
+<td>Unregisters a source.</td>
+</tr>
+<tr>
+<td><code>Resolve(string?)</code></td>
+<td>Resolves the template. Returns <code>null</code> for <code>null</code> input. Unresolvable placeholders are left intact.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iresolversource"><code>IResolverSource</code></h3>
+<p>Provides variables and functions to a resolver.</p>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ResolveVariable(string name)</code></td>
+<td>Returns the variable's value, or <code>null</code> if this source can't resolve it (deferring to the next source).</td>
+</tr>
+<tr>
+<td><code>ResolveFunction(string name)</code></td>
+<td>Returns a <code>Func&lt;FunctionCall, string&gt;</code>, or <code>null</code> if this source can't resolve it.</td>
+</tr>
+</tbody>
+</table>
+<p>Names never include the template delimiters: for <code>{color}</code> the name is <code>&quot;color&quot;</code>, and for
+<code>{repeat(abc,3)}</code> the name is <code>&quot;repeat&quot;</code>.</p>
+<h3 id="iresolverstore"><code>IResolverStore</code></h3>
+<p>Extends <code>IResolverSource</code> with mutation: <code>AddVariable</code>, <code>AddFunction</code>, <code>RemoveVariable</code>,
+<code>RemoveFunction</code>. Adding an entry whose name already exists replaces it.</p>
+<h3 id="functioncall"><code>FunctionCall</code></h3>
+<p>A readonly record struct passed to function delegates. Its single property, <code>Args</code>, contains the
+raw text between the parentheses — for <code>{repeat(abc,3)}</code> that's <code>&quot;abc,3&quot;</code>. The function is
+responsible for all parsing; Rez performs no splitting or trimming.</p>
+<h2 id="built-in-implementations">Built-in implementations</h2>
+<p>All implementations live in the <code>Invex.Rez.Implementation</code> namespace.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Use when...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Resolver</code></td>
+<td>You need the default <code>IResolver</code>.</td>
+</tr>
+<tr>
+<td><code>ResolverSource</code></td>
+<td>Your variables/functions are known up front (immutable, constructor-initialized).</td>
+</tr>
+<tr>
+<td><code>ResolverStore</code></td>
+<td>You need to add and remove variables/functions at runtime (mutable).</td>
+</tr>
+<tr>
+<td><code>ConfigResolverSource</code></td>
+<td>Your variables come from <code>Microsoft.Extensions.Configuration</code> (in the <code>Invex.Rez.Configuration</code> package — see <a href="configuration.html">Configuration Integration</a>).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="using-rez">Using Rez</h2>
+<p>To resolve the variables and functions in a template:</p>
+<ol>
+<li>Instantiate an implementation of <code>IResolver</code> (e.g., <code>Resolver</code>).</li>
+<li>Add sources for variable and function resolution, in the form of <code>IResolverSource</code>
+implementations.</li>
+<li>Call the <code>Resolve()</code> method on the <code>IResolver</code> instance, passing in the text to be resolved.</li>
+</ol>
+<p>The easiest way is to directly call <code>Resolver.Resolve()</code> with some variables:</p>
+<pre><code class="lang-csharp">var resolver = new Resolver();
+resolver.AddSource(new ResolverSource(new Dictionary&lt;string, string&gt; { { &quot;name&quot;, &quot;World&quot; } }));
+var input = &quot;Hello, {name}!&quot;;
+
+var greeting = resolver.Resolve(input);
+
+// greeting: &quot;Hello, World!&quot;
+</code></pre>
+<h2 id="writing-a-custom-iresolversource">Writing a custom <code>IResolverSource</code></h2>
+<p>Implement <code>IResolverSource</code> to pull values from anywhere — environment variables, a database,
+an HTTP service, computed values, and so on:</p>
+<pre><code class="lang-csharp">public sealed class EnvironmentResolverSource : IResolverSource
+{
+    public string? ResolveVariable(string name) =&gt;
+        Environment.GetEnvironmentVariable(name);
+
+    // This source provides no functions
+    public Func&lt;FunctionCall, string&gt;? ResolveFunction(string name) =&gt;
+        null;
+}
+</code></pre>
+<pre><code class="lang-csharp">var resolver = new Resolver()
+    .AddSource(new EnvironmentResolverSource());
+
+resolver.Resolve(&quot;Running on {COMPUTERNAME}&quot;);
+</code></pre>
+<p>Guidelines for implementations:</p>
+<ul>
+<li>Return <code>null</code> from <code>ResolveVariable</code>/<code>ResolveFunction</code> when the name is unknown — this lets the
+resolver fall through to the next source.</li>
+<li>Never return <code>null</code> <em>from a function delegate</em> — return an empty string for a blank result.</li>
+<li>Don't include braces, parentheses, or arguments in the names you match against.</li>
+</ul>
+<h2 id="how-resolution-works">How resolution works</h2>
+<p>Understanding the pipeline helps explain the behavior described in the
+<a href="syntax.html">Syntax Guide</a>:</p>
+<ol>
+<li><strong>Lexing</strong> — the input is scanned into literals, open braces, and close braces. A backslash
+escapes the following character, so escaped braces become literal text.</li>
+<li><strong>Tokenizing</strong> — braces are paired into variable tokens. For nested braces, the <em>innermost</em>
+pair forms the token, which is why nesting resolves inside-out. Unmatched braces fall back to
+literal text.</li>
+<li><strong>Rendering</strong> — the first resolvable placeholder (left to right) is substituted with its value.</li>
+<li><strong>Repeat</strong> — the pipeline runs again on the new text, until a pass produces no change. This is
+what enables nested and recursive resolution. A hard limit of 4096 passes guards against
+infinite recursion (e.g., a variable that resolves to itself) — exceeding it throws an
+exception.</li>
+</ol>
+<p>For each placeholder, the resolver first checks whether the contents match the function shape
+(<code>name(args)</code>); if a source resolves the function, its delegate is invoked with a <code>FunctionCall</code>
+containing the argument text. Otherwise the contents are treated as a variable name. If nothing
+resolves, the placeholder is left in the output unchanged.</p>
+<p>The pipeline operates on pooled buffers (<code>ArrayPool</code>) and spans, so resolution does not allocate
+per pass.</p>
+<h3 id="thread-safety">Thread safety</h3>
+<p><code>Resolver</code>, <code>ResolverSource</code>, and <code>ResolverStore</code> are not synchronized. Concurrent <code>Resolve()</code>
+calls against a fixed set of sources are safe, but mutating sources (<code>AddSource</code>,
+<code>AddVariable</code>, etc.) concurrently with resolution is not. Configure the resolver up front, or
+provide your own synchronization if you need runtime mutation under concurrency.</p>
+<h2 id="tips-and-best-practices">Tips and best practices</h2>
+<ul>
+<li><strong>Source ordering matters.</strong> Rez searches sources in the order they were added. If a variable
+or function is found in multiple sources, Rez uses the first one it encounters — put overrides
+first and fallbacks last.</li>
+<li><strong>Use custom <code>IResolverSource</code> implementations</strong> to provide additional variables and functions
+or to override existing ones. This is useful when you want to extend the template language or
+provide domain-specific functionality.</li>
+<li><strong>Escape deliberately.</strong> When creating text templates, ensure that variables and functions are
+enclosed within curly braces, and use escape characters (<code>\{</code>, <code>\}</code>) when braces should not be
+resolved. Note that the backslashes are preserved in the output — strip them yourself if the
+final text should not contain them.</li>
+<li><strong>Prefer <code>ResolverSource</code> for fixed data</strong> and <code>ResolverStore</code> when values change at runtime.</li>
+<li><strong>Functions own their argument parsing.</strong> Decide on a convention (e.g., comma-separated, no
+whitespace) and document it for template authors — whitespace is part of the argument text.</li>
+</ul>
+<p>By following these guidelines, you'll be able to effectively use Rez to create dynamic text
+templates that can be easily maintained and updated.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Invex-Games/rez/blob/main/docs/developer-guide.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          A library to implement the parsing and resolving of template text in .NET applications
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
