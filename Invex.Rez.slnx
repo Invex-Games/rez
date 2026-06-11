@@ -1,0 +1,10 @@
+﻿<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Invex.Rez.Configuration/Invex.Rez.Configuration.csproj" />
+    <Project Path="src/Invex.Rez/Invex.Rez.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Invex.Rez.Tests/Invex.Rez.Tests.csproj" />
+  </Folder>
+  <Project Path="_atom/_atom.csproj" />
+</Solution>
