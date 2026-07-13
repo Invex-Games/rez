@@ -1,0 +1,350 @@
+{
+  "source_base_path": "/home/runner/work/rez/rez",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "LICENSE.txt",
+      "output": {
+        "resource": {
+          "relative_path": "LICENSE.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Abstraction.FunctionCall.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Abstraction.FunctionCall.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Abstraction.FunctionCall",
+      "Summary": "<p sourcefile=\"api/Invex.Rez.Abstraction.FunctionCall.yml\" sourcestartlinenumber=\"1\">Contains the arguments for a Rez function call.\n<br><br>\nWhen an <xref href=\"Invex.Rez.Abstraction.IResolver\" data-throw-if-not-resolved=\"false\"></xref> encounters a function in a Rez template (e.g., <code>{name(args)}</code>),\nit constructs a <xref href=\"Invex.Rez.Abstraction.FunctionCall\" data-throw-if-not-resolved=\"false\"></xref> from the text between the parentheses and passes it to the\nfunction delegate obtained from an <xref href=\"Invex.Rez.Abstraction.IResolverSource\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Abstraction.IResolver.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Abstraction.IResolver.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Abstraction.IResolver",
+      "Summary": "<p sourcefile=\"api/Invex.Rez.Abstraction.IResolver.yml\" sourcestartlinenumber=\"1\">Provides functionality for resolving variables and functions in a Rez template into an output string.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Abstraction.IResolverSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Abstraction.IResolverSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Abstraction.IResolverSource",
+      "Summary": "<p sourcefile=\"api/Invex.Rez.Abstraction.IResolverSource.yml\" sourcestartlinenumber=\"1\">Provides a map of variables and functions to be used by an <xref href=\"Invex.Rez.Abstraction.IResolver\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Abstraction.IResolverStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Abstraction.IResolverStore.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Abstraction.IResolverStore",
+      "Summary": "<p sourcefile=\"api/Invex.Rez.Abstraction.IResolverStore.yml\" sourcestartlinenumber=\"1\">Provides a map of variables and functions to be used by an <xref href=\"Invex.Rez.Abstraction.IResolver\" data-throw-if-not-resolved=\"false\"></xref>,\nas well as the ability to add and remove variables and functions at any time.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Abstraction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Abstraction.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Abstraction",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Configuration.ConfigResolverSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Configuration.ConfigResolverSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Configuration.ConfigResolverSource",
+      "Summary": "<p sourcefile=\"api/Invex.Rez.Configuration.ConfigResolverSource.yml\" sourcestartlinenumber=\"1\">An <xref href=\"Invex.Rez.Abstraction.IResolverSource\" data-throw-if-not-resolved=\"false\"></xref> that resolves variables from an <xref href=\"Microsoft.Extensions.Configuration.IConfigurationRoot\" data-throw-if-not-resolved=\"false\"></xref>.<br>\nFunctions are not supported by this source.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Configuration.IResolvableConfig.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Configuration.IResolvableConfig.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Configuration.IResolvableConfig",
+      "Summary": "<p sourcefile=\"api/Invex.Rez.Configuration.IResolvableConfig.yml\" sourcestartlinenumber=\"1\">An <xref href=\"Microsoft.Extensions.Configuration.IConfigurationRoot\" data-throw-if-not-resolved=\"false\"></xref> whose values are resolved with an <xref href=\"Invex.Rez.Abstraction.IResolver\" data-throw-if-not-resolved=\"false\"></xref> on read,\nallowing configuration values to contain Rez templates (e.g., <code>&quot;{baseUrl}/api&quot;</code>).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Configuration.Setup.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Configuration.Setup.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Configuration.Setup",
+      "Summary": "<p sourcefile=\"api/Invex.Rez.Configuration.Setup.yml\" sourcestartlinenumber=\"1\">Provides extension methods for registering Rez configuration services with dependency injection.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Configuration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Configuration.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Configuration",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Implementation.Resolver.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Implementation.Resolver.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Implementation.Resolver",
+      "Summary": "<p sourcefile=\"api/Invex.Rez.Implementation.Resolver.yml\" sourcestartlinenumber=\"1\">The default implementation of <xref href=\"Invex.Rez.Abstraction.IResolver\" data-throw-if-not-resolved=\"false\"></xref>.<br>\nResolves variables (e.g., <code>{name}</code>) and functions (e.g., <code>{name(args)}</code>) in a Rez template\nby querying registered <xref href=\"Invex.Rez.Abstraction.IResolverSource\" data-throw-if-not-resolved=\"false\"></xref> instances in the order they were added.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Implementation.ResolverSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Implementation.ResolverSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Implementation.ResolverSource",
+      "Summary": "<p sourcefile=\"api/Invex.Rez.Implementation.ResolverSource.yml\" sourcestartlinenumber=\"1\">An immutable <xref href=\"Invex.Rez.Abstraction.IResolverSource\" data-throw-if-not-resolved=\"false\"></xref> backed by fixed maps of variables and functions\nsupplied at construction time.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Implementation.ResolverStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Implementation.ResolverStore.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Implementation.ResolverStore",
+      "Summary": "<p sourcefile=\"api/Invex.Rez.Implementation.ResolverStore.yml\" sourcestartlinenumber=\"1\">The default implementation of <xref href=\"Invex.Rez.Abstraction.IResolverStore\" data-throw-if-not-resolved=\"false\"></xref> - a mutable <xref href=\"Invex.Rez.Abstraction.IResolverSource\" data-throw-if-not-resolved=\"false\"></xref>\nwhose variables and functions can be added and removed at any time.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Invex.Rez.Implementation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Invex.Rez.Implementation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Invex.Rez.Implementation",
+      "Summary": null
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/configuration.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/configuration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/developer-guide.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/developer-guide.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/examples.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/examples.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/getting-started.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/syntax.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/syntax.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "docs/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/toc.html"
+        },
+        ".json": {
+          "relative_path": "docs/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/icon.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/icon.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

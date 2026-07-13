@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Getting Started | Invex.Rez </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Getting Started | Invex.Rez ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Invex-Games/rez/blob/main/docs/getting-started.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Invex.Rez">
+            Invex.Rez
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getting-started">Getting Started</h1>
+
+<h2 id="installation">Installation</h2>
+<p>Install the core package from NuGet:</p>
+<pre><code class="lang-shell">dotnet add package Invex.Rez
+</code></pre>
+<p>If you want to resolve templates inside <code>Microsoft.Extensions.Configuration</code> values, also install
+the configuration package:</p>
+<pre><code class="lang-shell">dotnet add package Invex.Rez.Configuration
+</code></pre>
+<p>Both packages target <code>net10.0</code>, <code>net9.0</code>, <code>net8.0</code>, and <code>netstandard2.0</code>, so they can be used from
+modern .NET, .NET Framework, and anything else that supports .NET Standard 2.0.</p>
+<h2 id="your-first-template">Your first template</h2>
+<p>Resolving a template takes three steps:</p>
+<ol>
+<li>Instantiate an implementation of <code>IResolver</code> (e.g., <code>Resolver</code>).</li>
+<li>Add one or more sources of variables and functions (<code>IResolverSource</code> implementations).</li>
+<li>Call <code>Resolve()</code>, passing in the text to be resolved.</li>
+</ol>
+<pre><code class="lang-csharp">using Invex.Rez.Abstraction;
+using Invex.Rez.Implementation;
+
+var resolver = new Resolver();
+
+resolver.AddSource(new ResolverSource(new Dictionary&lt;string, string&gt;
+{
+    { &quot;name&quot;, &quot;World&quot; }
+}));
+
+var greeting = resolver.Resolve(&quot;Hello, {name}!&quot;);
+
+// greeting: &quot;Hello, World!&quot;
+</code></pre>
+<h2 id="adding-functions">Adding functions</h2>
+<p>Functions are written in templates as <code>{name(args)}</code>. A function is a
+<code>Func&lt;FunctionCall, string&gt;</code> — it receives the raw argument text via <code>FunctionCall.Args</code> and
+returns the result:</p>
+<pre><code class="lang-csharp">var resolver = new Resolver();
+
+resolver.AddSource(new ResolverSource(new Dictionary&lt;string, Func&lt;FunctionCall, string&gt;&gt;
+{
+    { &quot;shout&quot;, call =&gt; (call.Args ?? string.Empty).ToUpperInvariant() + &quot;!!!&quot; }
+}));
+
+var output = resolver.Resolve(&quot;{shout(hello)}&quot;);
+
+// output: &quot;HELLO!!!&quot;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The argument text between the parentheses is passed to the function as a single string.
+The function itself is responsible for any parsing (e.g., splitting on commas) — no splitting
+or trimming is performed by Rez.</p>
+</div>
+<h2 id="mutable-sources-with-resolverstore">Mutable sources with <code>ResolverStore</code></h2>
+<p><code>ResolverSource</code> is immutable — its contents are fixed at construction time. When you need to add
+and remove variables or functions at runtime, use <code>ResolverStore</code>:</p>
+<pre><code class="lang-csharp">var store = new ResolverStore();
+var resolver = new Resolver().AddSource(store);
+
+store.AddVariable(&quot;user&quot;, &quot;Alice&quot;);
+store.AddFunction(&quot;now&quot;, _ =&gt; DateTime.UtcNow.ToString(&quot;O&quot;));
+
+var line = resolver.Resolve(&quot;[{now()}] {user} logged in&quot;);
+
+store.RemoveVariable(&quot;user&quot;);
+</code></pre>
+<p>Adding a variable or function with a name that already exists <strong>replaces</strong> the existing entry.</p>
+<h2 id="multiple-sources-and-ordering">Multiple sources and ordering</h2>
+<p>A resolver can have any number of sources. When resolving a placeholder, sources are queried
+<strong>in the order they were added</strong>, and the first non-null result wins:</p>
+<pre><code class="lang-csharp">var overrides = new ResolverStore();
+var defaults  = new ResolverSource(new Dictionary&lt;string, string&gt;
+{
+    { &quot;env&quot;, &quot;production&quot; }
+});
+
+var resolver = new Resolver()
+    .AddSource(overrides)   // queried first
+    .AddSource(defaults);   // queried second
+
+resolver.Resolve(&quot;{env}&quot;);  // &quot;production&quot;
+
+overrides.AddVariable(&quot;env&quot;, &quot;development&quot;);
+
+resolver.Resolve(&quot;{env}&quot;);  // &quot;development&quot; — the override wins
+</code></pre>
+<p>This makes it easy to layer sources: put overrides first and fallbacks last.</p>
+<h2 id="what-happens-when-something-cant-be-resolved">What happens when something can't be resolved?</h2>
+<p>Placeholders that no source can resolve are left in the output unchanged:</p>
+<pre><code class="lang-csharp">resolver.Resolve(&quot;Hello, {unknown}!&quot;);
+
+// &quot;Hello, {unknown}!&quot;
+</code></pre>
+<p>This means a missing variable never throws — the template degrades gracefully.</p>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li>Learn the full template language in the <a href="syntax.html">Syntax Guide</a></li>
+<li>See more complete scenarios in <a href="examples.html">Examples</a></li>
+<li>Understand the abstractions and write custom sources in the <a href="developer-guide.html">Developer Guide</a></li>
+<li>Resolve templates inside app configuration with <a href="configuration.html">Configuration Integration</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Invex-Games/rez/blob/main/docs/getting-started.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          A library to implement the parsing and resolving of template text in .NET applications
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
