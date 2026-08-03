@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Configuration Integration | Invex.Rez </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Configuration Integration | Invex.Rez ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Invex-Games/rez/blob/main/docs/configuration.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Invex.Rez">
+            Invex.Rez
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="configuration-integration">Configuration Integration</h1>
+
+<p>The <code>Invex.Rez.Configuration</code> package integrates Rez with
+<code>Microsoft.Extensions.Configuration</code>, enabling two complementary scenarios:</p>
+<ol>
+<li><strong>Configuration as a source</strong> — use configuration values as Rez variables
+(<code>ConfigResolverSource</code>)</li>
+<li><strong>Templates inside configuration</strong> — write Rez templates <em>in</em> your configuration files and
+have them resolved transparently when values are read (<code>IResolvableConfig</code>)</li>
+</ol>
+<h2 id="installation">Installation</h2>
+<pre><code class="lang-shell">dotnet add package Invex.Rez.Configuration
+</code></pre>
+<h2 id="configuration-as-a-variable-source">Configuration as a variable source</h2>
+<p><code>ConfigResolverSource</code> is an <code>IResolverSource</code> that resolves variables from an
+<code>IConfigurationRoot</code>:</p>
+<blockquote>
+<p>appsettings.json</p>
+</blockquote>
+<pre><code class="lang-json">{
+  &quot;ServiceName&quot;: &quot;orders-api&quot;,
+  &quot;Logging&quot;: {
+    &quot;Level&quot;: &quot;Information&quot;
+  }
+}
+</code></pre>
+<pre><code class="lang-csharp">var config = new ConfigurationBuilder()
+    .AddJsonFile(&quot;appsettings.json&quot;)
+    .Build();
+
+var resolver = new Resolver()
+    .AddSource(new ConfigResolverSource(config));
+
+resolver.Resolve(&quot;Starting {ServiceName} with log level {Logging:Level}&quot;);
+
+// &quot;Starting orders-api with log level Information&quot;
+</code></pre>
+<p>Nested configuration keys are addressed using the standard colon-delimited form
+(e.g., <code>{Logging:Level}</code>), exactly as with <code>IConfiguration</code> indexers. This source provides
+variables only — it does not supply functions.</p>
+<h2 id="templates-inside-configuration-values">Templates inside configuration values</h2>
+<p><code>IResolvableConfig</code> wraps an <code>IConfigurationRoot</code> so that any value read from it is resolved
+with an <code>IResolver</code> first. This lets configuration values reference each other (or anything else
+your resolver's sources provide):</p>
+<blockquote>
+<p>appsettings.json</p>
+</blockquote>
+<pre><code class="lang-json">{
+  &quot;BaseUrl&quot;: &quot;https://api.example.com&quot;,
+  &quot;Endpoints&quot;: {
+    &quot;Orders&quot;: &quot;{BaseUrl}/orders&quot;,
+    &quot;Customers&quot;: &quot;{BaseUrl}/customers&quot;
+  }
+}
+</code></pre>
+<h3 id="registration-with-dependency-injection">Registration with dependency injection</h3>
+<p>Use the <code>AddResolvableConfiguration()</code> extension method. It registers an <code>IResolvableConfig</code>
+singleton that requires <code>IConfigurationRoot</code> and <code>IResolver</code> to be registered as well:</p>
+<pre><code class="lang-csharp">var config = (IConfigurationRoot)new ConfigurationBuilder()
+    .AddJsonFile(&quot;appsettings.json&quot;)
+    .Build();
+
+var resolver = new Resolver()
+    .AddSource(new ConfigResolverSource(config));
+
+var services = new ServiceCollection()
+    .AddSingleton&lt;IConfigurationRoot&gt;(config)
+    .AddSingleton&lt;IResolver&gt;(resolver)
+    .AddResolvableConfiguration()
+    .BuildServiceProvider();
+
+var resolvableConfig = services.GetRequiredService&lt;IResolvableConfig&gt;();
+
+var ordersUrl = resolvableConfig[&quot;Endpoints:Orders&quot;];
+
+// ordersUrl: &quot;https://api.example.com/orders&quot;
+</code></pre>
+<h3 id="behavior">Behavior</h3>
+<ul>
+<li>Values read via the indexer, <code>GetSection()</code>, <code>GetChildren()</code>, and section <code>Value</code> properties
+are resolved automatically.</li>
+<li>Child sections are wrapped too, so resolution applies at any depth.</li>
+<li><strong>Writes pass through unmodified</strong> — assigning a value stores the raw text, templates intact.</li>
+<li><code>IResolvableConfig</code> also exposes the <code>Resolver</code> used and a convenience
+<code>Resolve(string?)</code> method for resolving arbitrary text with the same resolver.</li>
+<li>Since <code>IResolvableConfig</code> implements <code>IConfigurationRoot</code>, it can be handed to any API that
+accepts <code>IConfiguration</code>/<code>IConfigurationRoot</code>, transparently adding template resolution.</li>
+</ul>
+<h3 id="escaping-in-json">Escaping in JSON</h3>
+<p>Remember that backslashes must be escaped in JSON, so a literal brace in a configuration value is
+written as:</p>
+<pre><code class="lang-json">{
+  &quot;myTemplate&quot;: &quot;\\{escapedVariable\\}&quot;
+}
+</code></pre>
+<h2 id="combining-both-scenarios">Combining both scenarios</h2>
+<p>A common setup uses the configuration itself as the variable source for resolving the
+configuration's own values — this is exactly what the registration example above does:
+<code>ConfigResolverSource</code> feeds variables from <code>appsettings.json</code> into the resolver, and
+<code>IResolvableConfig</code> applies that resolver to every value read, so configuration values can
+reference each other freely.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Invex-Games/rez/blob/main/docs/configuration.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          A library to implement the parsing and resolving of template text in .NET applications
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
