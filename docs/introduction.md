@@ -57,7 +57,7 @@ Rez is not a good fit when:
   for the common case.
 - **Inside-out, one step at a time.** The innermost placeholder resolves first, then the template is
   resolved again until nothing changes. Nesting and recursion fall out of this rule, with a hard
-  limit of 4096 passes so a self-referencing value throws instead of looping forever.
+  limit of 4096 passes so a cycle such as `a = {b}`, `b = {a}` throws instead of looping forever.
 - **First match wins.** Sources are queried in the order they were added, so layering overrides and
   defaults is a matter of registration order.
 - **Degrade gracefully.** Unknown variables and functions never throw; the placeholder is left in

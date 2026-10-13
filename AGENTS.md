@@ -189,7 +189,7 @@ A drift between `_atom/IBuild.cs` and the committed YAML should be treated as a 
 For anything beyond the above, prefer these over duplicating detail:
 
 - `README.md` — package overview and quick start.
-- `docs/index.md` — what Rez is and why it exists.
+- `docs/introduction.md` — what Rez is and why it exists.
 - `docs/getting-started.md` — installation, first template, sources and ordering.
 - `docs/syntax.md` — the complete template language reference (the source of truth for
   language behavior, including escaping and not-found semantics).
