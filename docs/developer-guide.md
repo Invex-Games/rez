@@ -2,11 +2,12 @@
 
 Rez allows you to resolve variables and functions embedded within strings, making it easier to
 dynamically generate text. This guide explains the library's abstractions, the built-in
-implementations, and how to extend Rez with custom sources.
+implementations, and how to extend Rez with custom sources. Read it when you want to supply values
+from your own data, or need to understand exactly how a template is resolved.
 
 ## Architecture at a glance
 
-```
+```text
             ┌────────────────────────────────────────────┐
  template ─►│ IResolver (Resolver)                       │─► output
             │                                            │
@@ -149,6 +150,10 @@ calls against a fixed set of sources are safe, but mutating sources (`AddSource`
 `AddVariable`, etc.) concurrently with resolution is not. Configure the resolver up front, or
 provide your own synchronization if you need runtime mutation under concurrency.
 
+> [!WARNING]
+> Resolution depth is capped at 4096 passes. Exceeding it (for example, `a = {a}`) throws an
+> `Exception` with the message `Resolution depth exceeded.`
+
 ## Tips and best practices
 
 - **Source ordering matters.** Rez searches sources in the order they were added. If a variable
@@ -168,4 +173,12 @@ provide your own synchronization if you need runtime mutation under concurrency.
 By following these guidelines, you'll be able to effectively use Rez to create dynamic text
 templates that can be easily maintained and updated.
 
+## See also
 
+- [Syntax Guide](syntax.md): the template language these abstractions implement
+- [Configuration Integration](configuration.md): `ConfigResolverSource` and `IResolvableConfig`
+- [Examples](examples.md): multi-source examples
+- <xref:Invex.Rez.Abstraction.IResolver>, <xref:Invex.Rez.Abstraction.IResolverSource>,
+  <xref:Invex.Rez.Abstraction.IResolverStore>, <xref:Invex.Rez.Abstraction.FunctionCall>
+- <xref:Invex.Rez.Implementation.Resolver>, <xref:Invex.Rez.Implementation.ResolverSource>,
+  <xref:Invex.Rez.Implementation.ResolverStore>

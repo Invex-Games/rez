@@ -8,6 +8,9 @@ The `Invex.Rez.Configuration` package integrates Rez with
 2. **Templates inside configuration** — write Rez templates *in* your configuration files and
    have them resolved transparently when values are read (`IResolvableConfig`)
 
+Use this page when configuration values should feed templates, or when configuration values should
+themselves contain templates.
+
 ## Installation
 
 ```shell
@@ -121,3 +124,10 @@ configuration's own values — this is exactly what the registration example abo
 `IResolvableConfig` applies that resolver to every value read, so configuration values can
 reference each other freely.
 
+## See also
+
+- [Getting Started](getting-started.md): resolver and source basics
+- [Syntax Guide](syntax.md#escaping): escaping rules
+- [Examples](examples.md): configuration-driven examples
+- <xref:Invex.Rez.Configuration.ConfigResolverSource>, <xref:Invex.Rez.Configuration.IResolvableConfig>,
+  <xref:Invex.Rez.Configuration.Setup>
