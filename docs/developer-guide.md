@@ -151,8 +151,10 @@ calls against a fixed set of sources are safe, but mutating sources (`AddSource`
 provide your own synchronization if you need runtime mutation under concurrency.
 
 > [!WARNING]
-> Resolution depth is capped at 4096 passes. Exceeding it (for example, `a = {a}`) throws an
-> `Exception` with the message `Resolution depth exceeded.`
+> Resolution depth is capped at 4096 passes. A cycle whose output keeps changing (for example,
+> `a = {b}` and `b = {a}`) exceeds it and throws an `Exception` with the message
+> `Resolution depth exceeded.` A direct self-reference such as `a = {a}` does not: its first pass
+> produces identical text, so resolution stops and returns `{a}` unchanged.
 
 ## Tips and best practices
 
