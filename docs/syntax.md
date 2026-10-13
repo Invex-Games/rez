@@ -1,6 +1,8 @@
 # Syntax Guide
 
-This page is the complete reference for the Rez template language.
+This page is the complete reference for the Rez template language: variables, functions, nesting,
+recursion and escaping. Use it when writing templates or when you need to know exactly how a
+template will resolve.
 
 In Rez, variables and functions are enclosed within curly braces:
 
@@ -13,7 +15,7 @@ All examples on this page use the [example data](#example-data-for-this-page) li
 
 Any plain text that doesn't get resolved into variables or functions will always resolve as itself:
 
-```
+```text
 in  > here are some words
 out > here are some words
 ```
@@ -24,7 +26,7 @@ out > here are some words
 
 Insert a variable using curly braces:
 
-```
+```text
 in  > {variable1}
 out > variableValue1
 ```
@@ -34,7 +36,7 @@ out > variableValue1
 Variables can be nested and will always be resolved from the innermost to the outermost,
 left to right:
 
-```
+```text
 in  > {variable{number2}}
 --- > {variable2}
 out > variableValue2
@@ -42,7 +44,7 @@ out > variableValue2
 
 Multiple placeholders in one template are resolved left to right:
 
-```
+```text
 in  > {variable1} {variable2} {variable3}
 --- > variableValue1 {variable2} {variable3}
 --- > variableValue1 variableValue2 {variable3}
@@ -53,7 +55,7 @@ out > variableValue1 variableValue2 variableValue3
 
 A variable's value may itself contain placeholders, which are resolved in turn:
 
-```
+```text
 in  > {chain1}
 --- > {chain2}
 out > variableValue1
@@ -71,7 +73,7 @@ chain2 = variableValue1
 
 When a variable is not found, it resolves as the input, including the curly braces:
 
-```
+```text
 in  > {variable4}
 out > {variable4}
 ```
@@ -82,14 +84,14 @@ out > {variable4}
 
 Call a function with curly braces and parentheses:
 
-```
+```text
 in  > {date()}
 out > 2023-04-05
 ```
 
 Functions can also accept parameters:
 
-```
+```text
 in  > {fancyFunction(ooh!)}
 out > ***ooh!***
 ```
@@ -98,7 +100,7 @@ out > ***ooh!***
 
 Call a function with multiple parameters by separating them with commas:
 
-```
+```text
 in  > wo{repeatFunction(lo,2)}
 out > wololo
 ```
@@ -109,7 +111,7 @@ out > wololo
 
 Whitespace is NOT ignored in function parameters, and is treated as part of the parameter:
 
-```
+```text
 in  > {andFunction(apple,banana)}
 out > apple&banana
 
@@ -117,6 +119,7 @@ in  > {andFunction(apple, banana)}
 out > apple& banana
 ```
 
+> [!TIP]
 > This usually doesn't matter for parameters that are numbers, but it's good to not get into the
 > habit of adding whitespace to function parameters, as is the case with many programming
 > languages.
@@ -125,7 +128,7 @@ out > apple& banana
 
 Because placeholders resolve inside-out, variables can be used as function parameters:
 
-```
+```text
 in  > {fancyFunction({variable1})}
 --- > {fancyFunction(variableValue1)}
 out > ***variableValue1***
@@ -136,7 +139,7 @@ out > ***variableValue1***
 When a function is not found, it resolves as the input, including the curly braces and
 parentheses:
 
-```
+```text
 in  > {notAFunction(ooh!)}
 out > {notAFunction(ooh!)}
 ```
@@ -145,14 +148,14 @@ out > {notAFunction(ooh!)}
 
 Use a backslash before a brace to prevent it from being treated as a placeholder delimiter:
 
-```
+```text
 in  > \{variable1\}
 out > \{variable1\}
 ```
 
 This works for functions too:
 
-```
+```text
 in  > \{escapedFunction(parameter)\}
 out > \{escapedFunction(parameter)\}
 ```
@@ -165,7 +168,7 @@ out > \{escapedFunction(parameter)\}
 
 Escaped braces inside an unescaped placeholder become part of the name itself:
 
-```
+```text
 in  > \{{example\}}
 out > \{value
 
@@ -190,7 +193,7 @@ If writing templates inside `.json` files, you will need to escape the backslash
 
 Variables used in examples:
 
-```
+```text
 variable1: variableValue1
 variable2: variableValue2
 variable3: variableValue3
@@ -201,11 +204,16 @@ number3:   3
 
 Functions used in examples:
 
-```
+```text
 date():                      [the current date]
 fancyFunction(input):        ***input***
 andFunction(input1,input2):  input1&input2
 repeatFunction(input,count): [repeat input count times]
 ```
 
+## See also
 
+- [Getting Started](getting-started.md): register variables and functions in code
+- [Examples](examples.md): templates applied to complete scenarios
+- [Developer Guide](developer-guide.md#how-resolution-works): how the resolution pipeline produces these results
+- <xref:Invex.Rez.Abstraction.IResolver> and <xref:Invex.Rez.Abstraction.FunctionCall>
