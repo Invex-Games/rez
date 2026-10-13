@@ -47,7 +47,7 @@ For `Microsoft.Extensions.Configuration` integration, install the additional pac
 dotnet add package Invex.Rez.Configuration
 ```
 
-Both packages target `net10.0`, `net9.0`, `net8.0`, and `netstandard2.0`. The test project also
+Both packages target `net10.0` and `netstandard2.0`. The test project also
 runs on `net48`.
 
 ## Variables and functions

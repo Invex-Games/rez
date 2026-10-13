@@ -15,7 +15,7 @@ the configuration package:
 dotnet add package Invex.Rez.Configuration
 ```
 
-Both packages target `net10.0`, `net9.0`, `net8.0`, and `netstandard2.0`, so they can be used from
+Both packages target `net10.0` and `netstandard2.0`, so they can be used from
 modern .NET, .NET Framework, and anything else that supports .NET Standard 2.0.
 
 ## Your first template

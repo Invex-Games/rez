@@ -10,9 +10,9 @@ language and architecture references.
 
 | Project | Role | Target frameworks |
 |---------|------|-------------------|
-| `Invex.Rez` | The core library: `IResolver`/`Resolver`, `IResolverSource`/`ResolverSource`, `IResolverStore`/`ResolverStore`, `FunctionCall`, and the internal compiler pipeline | `net10.0;net9.0;net8.0;netstandard2.0` |
-| `Invex.Rez.Configuration` | `ConfigResolverSource`, `IResolvableConfig`, and the `AddResolvableConfiguration()` DI extension | `net10.0;net9.0;net8.0;netstandard2.0` |
-| `Invex.Rez.Tests` | NUnit test suite covering both the public surface and the internal compiler | `net10.0;net9.0;net8.0;net48` |
+| `Invex.Rez` | The core library: `IResolver`/`Resolver`, `IResolverSource`/`ResolverSource`, `IResolverStore`/`ResolverStore`, `FunctionCall`, and the internal compiler pipeline | `net10.0;netstandard2.0` |
+| `Invex.Rez.Configuration` | `ConfigResolverSource`, `IResolvableConfig`, and the `AddResolvableConfiguration()` DI extension | `net10.0;netstandard2.0` |
+| `Invex.Rez.Tests` | NUnit test suite covering both the public surface and the internal compiler | `net10.0;net48` |
 | `_atom` | Atom build definition (`IBuild.cs`) that generates the GitHub Actions workflows | `net10.0` |
 
 Sources live under `src/`, tests under `tests/`, the Atom build definition under `_atom/`, and
@@ -158,7 +158,7 @@ A drift between `_atom/IBuild.cs` and the committed YAML should be treated as a 
   in `*.verified.txt` files as unintentional API/behavior changes. To accept a valid change,
   overwrite the `*.verified.txt` with the matching `*.received.txt`, delete the received file,
   and re-run `dotnet test`.
-- CI runs the test matrix across `net8.0`/`net9.0`/`net10.0` on Ubuntu and Windows, plus `net48`
+- CI runs the tests on `net10.0` on Ubuntu and Windows, plus `net48`
   on Windows — keep tests free of platform- and TFM-specific assumptions.
 - Verify snapshot files use LF (`\n`) line endings. A snapshot mismatch writes a
   `*.received.txt` file next to the committed `*.verified.txt`; fix unintended diffs in code, or
