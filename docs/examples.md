@@ -1,12 +1,15 @@
 # Examples
 
 This page walks through complete examples, from a simple greeting to a multi-source application.
+Use it to see how variables, functions, nesting and configuration combine in realistic templates.
+The configuration-based examples need the `Invex.Rez.Configuration` package and
+`Microsoft.Extensions.Configuration.Json` for `ConfigurationBuilder.AddJsonFile`.
 
 ## Simple example: Greeting
 
 Template:
 
-```
+```text
 Hello, {name}! Welcome to our platform.
 ```
 
@@ -20,7 +23,7 @@ Variables:
 
 Resolved text:
 
-```
+```text
 Hello, John! Welcome to our platform.
 ```
 
@@ -43,7 +46,7 @@ var output = resolver.Resolve("Hello, {name}! Welcome to our platform.");
 
 Template:
 
-```
+```text
 The temperature is {temperature} degrees Fahrenheit ({fahrenheitToCelsius({temperature})} degrees Celsius).
 ```
 
@@ -57,13 +60,13 @@ Variables:
 
 Functions:
 
-```
+```text
 fahrenheitToCelsius(fahrenheit) => (fahrenheit - 32) * 5 / 9
 ```
 
 Resolved text:
 
-```
+```text
 The temperature is 68 degrees Fahrenheit (20 degrees Celsius).
 ```
 
@@ -101,7 +104,7 @@ first, so the function receives `"68"` as its argument text.
 
 Template:
 
-```
+```text
 Dear {customer:name},
 
 Thank you for your order of {product:name} ({product:sku}). Your order number is {order:number}.
@@ -136,13 +139,13 @@ Variables (e.g., loaded from configuration — note the colon-delimited keys for
 
 Functions:
 
-```
+```text
 calculateTotal(price,tax) => price + tax
 ```
 
 Resolved text:
 
-```
+```text
 Dear Jane,
 
 Thank you for your order of Wireless Headphones (WH-123). Your order number is ORD-456.
@@ -214,10 +217,10 @@ resolver.AddSource(new ConfigResolverSource(config));
 
 // Get user input
 Console.WriteLine("Enter a sentence:");
-string input = Console.ReadLine();
+var input = Console.ReadLine();
 
 // Resolve the text from the template
-string output = resolver.Resolve(input);
+var output = resolver.Resolve(input);
 
 // Output the resolved text
 Console.WriteLine(output);
@@ -225,9 +228,19 @@ Console.WriteLine(output);
 
 If we run the application and enter the following text:
 
-> The quick {color} {animal1} jumped over the {description} {animal2}.
+```text
+The quick {color} {animal1} jumped over the {description} {animal2}.
+```
 
 The output will be:
 
-> The quick brown fox jumped over the lazy dog.
+```text
+The quick brown fox jumped over the lazy dog.
+```
 
+## See also
+
+- [Syntax Guide](syntax.md): the complete template language reference
+- [Configuration Integration](configuration.md): using configuration as a source, or templates inside configuration
+- [Developer Guide](developer-guide.md): writing custom sources
+- <xref:Invex.Rez.Implementation.ResolverSource> and <xref:Invex.Rez.Configuration.ConfigResolverSource>
