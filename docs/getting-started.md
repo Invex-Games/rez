@@ -1,5 +1,8 @@
 # Getting Started
 
+This page takes you from installing the package to resolving templates with variables, functions,
+mutable values and layered sources. Read it first if you have not used Rez before.
+
 ## Installation
 
 Install the core package from NuGet:
@@ -22,8 +25,8 @@ modern .NET, .NET Framework, and anything else that supports .NET Standard 2.0.
 
 Resolving a template takes three steps:
 
-1. Instantiate an implementation of `IResolver` (e.g., `Resolver`).
-2. Add one or more sources of variables and functions (`IResolverSource` implementations).
+1. Instantiate an implementation of <xref:Invex.Rez.Abstraction.IResolver> (e.g., <xref:Invex.Rez.Implementation.Resolver>).
+2. Add one or more sources of variables and functions (<xref:Invex.Rez.Abstraction.IResolverSource> implementations).
 3. Call `Resolve()`, passing in the text to be resolved.
 
 ```csharp
@@ -46,7 +49,7 @@ var greeting = resolver.Resolve("Hello, {name}!");
 
 Functions are written in templates as `{name(args)}`. A function is a
 `Func<FunctionCall, string>` — it receives the raw argument text via `FunctionCall.Args` and
-returns the result:
+returns the result. The `using` directives from the first example apply here too:
 
 ```csharp
 var resolver = new Resolver();
@@ -83,7 +86,8 @@ var line = resolver.Resolve("[{now()}] {user} logged in");
 store.RemoveVariable("user");
 ```
 
-Adding a variable or function with a name that already exists **replaces** the existing entry.
+> [!NOTE]
+> Adding a variable or function with a name that already exists replaces the existing entry.
 
 ## Multiple sources and ordering
 
@@ -120,7 +124,24 @@ resolver.Resolve("Hello, {unknown}!");
 // "Hello, {unknown}!"
 ```
 
-This means a missing variable never throws — the template degrades gracefully.
+This means a missing variable never throws — the template degrades gracefully. Likewise,
+`Resolve(null)` returns `null`.
+
+## Registering with dependency injection
+
+The core package has no dependency-injection extensions. Register the resolver you built as a
+singleton so it can be injected wherever templates are resolved:
+
+```csharp
+services.AddSingleton<IResolver>(resolver);
+```
+
+> [!WARNING]
+> `Resolver`, `ResolverSource`, and `ResolverStore` are not synchronized. Configure sources before
+> resolving concurrently, or provide your own synchronization if you mutate them at runtime.
+
+To resolve templates inside configuration values, see
+[Configuration Integration](configuration.md), which adds `AddResolvableConfiguration()`.
 
 ## Next steps
 
@@ -128,4 +149,6 @@ This means a missing variable never throws — the template degrades gracefully.
 - See more complete scenarios in [Examples](examples.md)
 - Understand the abstractions and write custom sources in the [Developer Guide](developer-guide.md)
 - Resolve templates inside app configuration with [Configuration Integration](configuration.md)
+- Browse the API: <xref:Invex.Rez.Implementation.Resolver>, <xref:Invex.Rez.Implementation.ResolverSource>,
+  <xref:Invex.Rez.Implementation.ResolverStore>
 
