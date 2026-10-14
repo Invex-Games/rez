@@ -163,4 +163,79 @@ public class ExecutorTests
 
         Should.Throw<RezResolutionException>(() => Executor.Execute("{a}", resolution));
     }
+
+    [TestCase(10_000)]
+    public void Execute_ManyFlatPlaceholders_DoesNotThrow(int count)
+    {
+        var input = string.Concat(Enumerable.Repeat("{a}", count));
+        Func<string, string> resolution = s => s == "a" ? "1" : NoMatch(s);
+
+        var result = Executor.Execute(input, resolution);
+
+        result.ShouldBe(new('1', count));
+    }
+
+    [Test]
+    public void Execute_ValueWithManyPlaceholders_DoesNotThrow()
+    {
+        var value = string.Concat(Enumerable.Repeat("{b}", Executor.MaxResolutionDepth + 100));
+        Func<string, string> resolution = s => s switch
+        {
+            "a" => value,
+            "b" => "2",
+            _ => NoMatch(s),
+        };
+
+        var result = Executor.Execute("{a}", resolution);
+
+        result.ShouldBe(new('2', Executor.MaxResolutionDepth + 100));
+    }
+
+    [Test]
+    public void Execute_ChainAtMaxDepth_Returns_Value()
+    {
+        Func<string, string> resolution = s =>
+        {
+            var n = int.Parse(s);
+
+            return n < Executor.MaxResolutionDepth ? $"{{{n + 1}}}" : "done";
+        };
+
+        Executor.Execute("{1}", resolution).ShouldBe("done");
+    }
+
+    [Test]
+    public void Execute_ChainBeyondMaxDepth_Throws_RezResolutionException()
+    {
+        Func<string, string> resolution = s =>
+        {
+            var n = int.Parse(s);
+
+            return n <= Executor.MaxResolutionDepth ? $"{{{n + 1}}}" : "done";
+        };
+
+        Should.Throw<RezResolutionException>(() => Executor.Execute("{1}", resolution));
+    }
+
+    [Test]
+    public void Execute_GrowingExpansion_Throws_RezResolutionException()
+    {
+        Func<string, string> resolution = s => s == "a" ? "x{a}" : NoMatch(s);
+
+        Should.Throw<RezResolutionException>(() => Executor.Execute("{a}", resolution));
+    }
+
+    [Test]
+    public void Execute_NestedPlaceholderInResolvedValue_Returns_Value()
+    {
+        Func<string, string> resolution = s => s switch
+        {
+            "outer" => "{key{n}}",
+            "n" => "1",
+            "key1" => "ok",
+            _ => NoMatch(s),
+        };
+
+        Executor.Execute("{outer}", resolution).ShouldBe("ok");
+    }
 }

@@ -7,7 +7,9 @@ namespace Invex.Rez.Compiler;
 internal static class Executor
 {
     /// <summary>
-    ///     The maximum number of substitution passes before resolution is abandoned.
+    ///     The maximum substitution depth: how many times text produced by resolving a placeholder may itself
+    ///     contain a placeholder that is resolved in turn (e.g., <c>{a}</c> to <c>{b}</c> to <c>{c}</c> is depth 3).
+    ///     Placeholders written in the template itself are depth 1, however many there are.
     /// </summary>
     internal const int MaxResolutionDepth = 4096;
 
@@ -21,15 +23,21 @@ internal static class Executor
     /// </param>
     /// <returns>The fully resolved text, or <see langword="null" /> if <paramref name="input" /> is <see langword="null" />.</returns>
     /// <exception cref="RezResolutionException">
-    ///     Thrown if the text is still changing after <see cref="MaxResolutionDepth" /> passes, such as for a cycle
-    ///     like <c>a = {b}</c>, <c>b = {a}</c>.
+    ///     Thrown if a substitution would exceed <see cref="MaxResolutionDepth" />, such as for a cycle like
+    ///     <c>a = {b}</c>, <c>b = {a}</c>, or a value that contains its own placeholder plus other text.
     /// </exception>
     /// <remarks>
     ///     Each pass resolves at most one placeholder; passes repeat until the text no longer changes.
     ///     This naturally handles nested and recursive resolutions.
     ///     A placeholder whose value is its own placeholder text (e.g., <c>a = {a}</c>) leaves the text unchanged,
-    ///     so resolution simply stops there. A maximum depth guards against cycles whose output keeps changing
-    ///     (e.g., <c>a = {b}</c>, <c>b = {a}</c>, or a value that contains its own placeholder plus other text).
+    ///     so resolution simply stops there.
+    ///     <br />
+    ///     Every character carries the depth of the substitution that produced it (0 for template text).
+    ///     A placeholder resolves at one more than the deepest character it spans, and its value's characters
+    ///     take that depth. Runaway resolution (a changing cycle or an ever-growing expansion) therefore keeps
+    ///     getting deeper and hits <see cref="MaxResolutionDepth" />, while any number of independent
+    ///     placeholders in a template or value does not count against the limit.
+    ///     <br />
     ///     Buffers are rented from <see cref="ArrayPool{T}" /> and grown as needed, so templates and resolved
     ///     values of any length are supported without per-pass allocations.
     /// </remarks>
@@ -47,20 +55,24 @@ internal static class Executor
         var sourceArray = ArrayPool<char>.Shared.Rent(input.Length);
         var destArray = ArrayPool<char>.Shared.Rent(input.Length);
 
+        // The substitution depth of each character in the source / dest text.
+        var sourceDepthArray = ArrayPool<int>.Shared.Rent(input.Length);
+        var destDepthArray = ArrayPool<int>.Shared.Rent(input.Length);
+
         try
         {
             input
                 .AsSpan()
                 .CopyTo(sourceArray);
 
+            sourceDepthArray
+                .AsSpan(0, input.Length)
+                .Clear();
+
             var textLength = input.Length;
-            var resolutionDepth = 0;
 
             while (true)
             {
-                if (resolutionDepth > MaxResolutionDepth)
-                    throw new RezResolutionException("Resolution depth exceeded.");
-
                 if (lexemeArray.Length < textLength)
                 {
                     ArrayPool<Lexeme>.Shared.Return(lexemeArray);
@@ -74,6 +86,7 @@ internal static class Executor
                 }
 
                 var sourceText = sourceArray.AsSpan(0, textLength);
+                var sourceDepths = sourceDepthArray.AsSpan(0, textLength);
 
                 var lexemeLength = Lexer.Lex(sourceText, lexemeArray);
                 var tokenLength = Tokenizer.TokenizeLexemes(lexemeArray.AsSpan(0, lexemeLength), tokenArray);
@@ -86,6 +99,17 @@ internal static class Executor
                         out var value))
                     break;
 
+                var depth = 0;
+
+                foreach (var characterDepth in sourceDepths.Slice(variableStart, variableLength))
+                    if (characterDepth > depth)
+                        depth = characterDepth;
+
+                depth++;
+
+                if (depth > MaxResolutionDepth)
+                    throw new RezResolutionException("Resolution depth exceeded.");
+
                 var outputLength = textLength - variableLength + value.Length;
 
                 if (destArray.Length < outputLength)
@@ -94,10 +118,21 @@ internal static class Executor
                     destArray = ArrayPool<char>.Shared.Rent(outputLength);
                 }
 
+                if (destDepthArray.Length < outputLength)
+                {
+                    ArrayPool<int>.Shared.Return(destDepthArray);
+                    destDepthArray = ArrayPool<int>.Shared.Rent(outputLength);
+                }
+
                 textLength = Renderer.Substitute(sourceText, variableStart, variableLength, value, destArray);
 
+                var destDepths = destDepthArray.AsSpan(0, textLength);
+                sourceDepths[..variableStart].CopyTo(destDepths);
+                destDepths.Slice(variableStart, value.Length).Fill(depth);
+                sourceDepths[(variableStart + variableLength)..].CopyTo(destDepths[(variableStart + value.Length)..]);
+
                 (sourceArray, destArray) = (destArray, sourceArray);
-                resolutionDepth++;
+                (sourceDepthArray, destDepthArray) = (destDepthArray, sourceDepthArray);
             }
 
             return new(sourceArray, 0, textLength);
@@ -106,6 +141,8 @@ internal static class Executor
         {
             ArrayPool<char>.Shared.Return(sourceArray);
             ArrayPool<char>.Shared.Return(destArray);
+            ArrayPool<int>.Shared.Return(sourceDepthArray);
+            ArrayPool<int>.Shared.Return(destDepthArray);
             ArrayPool<Lexeme>.Shared.Return(lexemeArray);
             ArrayPool<SyntaxToken>.Shared.Return(tokenArray);
         }

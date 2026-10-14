@@ -2,7 +2,7 @@
 
 /// <summary>
 ///     The exception thrown when a Rez template cannot be resolved, such as when resolution exceeds the
-///     maximum number of passes because of a cycle whose output keeps changing (e.g., <c>a = {b}</c> and
+///     maximum recursion depth because of a cycle whose output keeps changing (e.g., <c>a = {b}</c> and
 ///     <c>b = {a}</c>).
 /// </summary>
 /// <remarks>
