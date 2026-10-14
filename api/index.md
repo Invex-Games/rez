@@ -15,6 +15,7 @@ The core templating library.
 | [`IResolverSource`](xref:Invex.Rez.Abstraction.IResolverSource) | Interface | Provides a map of variables and functions to be used by an `IResolver`. |
 | [`IResolverStore`](xref:Invex.Rez.Abstraction.IResolverStore) | Interface | An `IResolverSource` that also supports adding and removing variables and functions at any time. |
 | [`FunctionCall`](xref:Invex.Rez.Abstraction.FunctionCall) | Record struct | Contains the raw argument text for a Rez function call. |
+| [`RezResolutionException`](xref:Invex.Rez.Abstraction.RezResolutionException) | Class | Thrown when a template cannot be resolved, such as a cycle that exceeds the 4096-pass limit. |
 
 ### Invex.Rez.Implementation
 

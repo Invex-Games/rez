@@ -66,8 +66,10 @@ chain2 = variableValue1
 ```
 
 > [!NOTE]
-> There is a hard limit of 4096 recursions in a single template to prevent infinite loops.
-> Exceeding the limit (e.g., a variable that resolves to itself) throws an exception.
+> There is a hard limit of 4096 substitution passes in a single template to prevent infinite loops.
+> A cycle whose output keeps changing (e.g., `a = {b}` and `b = {a}`) exceeds the limit and throws a
+> `RezResolutionException`. A variable that resolves to its own placeholder (e.g., `a = {a}`) does not:
+> the text stops changing, so `{a}` is returned unchanged.
 
 ### When a variable is not found
 
