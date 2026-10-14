@@ -3,7 +3,7 @@
 [![Build](https://github.com/Invex-Games/rez/actions/workflows/Build.yml/badge.svg)](https://github.com/Invex-Games/rez/actions/workflows/Build.yml)
 [![NuGet](https://img.shields.io/nuget/v/Invex.Rez.svg)](https://www.nuget.org/packages/Invex.Rez)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Invex-Games/rez/blob/main/LICENSE.txt)
-[![.NET](https://img.shields.io/badge/.NET-8.0%20%7C%209.0%20%7C%2010.0%20%7C%20Standard%202.0-512BD4.svg)](https://dotnet.microsoft.com/)
+[![.NET](https://img.shields.io/badge/.NET-10.0%20%7C%20Standard%202.0-512BD4.svg)](https://dotnet.microsoft.com/)
 
 Rez is a small .NET library for resolving terse, nestable template text such as `{name}` and
 `{function(args)}`. It is designed for application strings, configuration values, and other text

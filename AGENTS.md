@@ -56,9 +56,10 @@ Build the DocFX site with `docfx docfx.json`; add `--serve` to preview it locall
 - C# `LangVersion` 14, `ImplicitUsings` and `Nullable` enabled, `TreatWarningsAsErrors` on.
 - Global usings live in each project's `_usings.cs` — add shared usings there, not per-file.
   `Invex.Rez/_usings.cs` also declares `InternalsVisibleTo("Invex.Rez.Tests")`.
-- `GenerateDocumentationFile` is on. `CS1591` is in the repo-wide `NoWarn`, so missing XML docs
-  won't fail the build — but the convention is that **every public type and member has
-  comprehensive XML docs anyway**. Keep them accurate to the implementation.
+- `GenerateDocumentationFile` is on and `CS1591` is enforced for the shipped `src/` projects, so a
+  missing XML comment on public surface fails the build (the test project and `_atom` suppress it in
+  their own `.csproj`). **Every public type and member needs comprehensive XML docs**; keep them
+  accurate to the implementation.
 - The IDE may report “Partial property ... must have an implementation part” for `[GeneratedRegex]`
   partial properties. This is an analyzer artifact; `dotnet build` is the source of truth.
 - Internal cross-member helpers remain `internal`; only the intended consumer surface is `public`.
@@ -183,6 +184,23 @@ A drift between `_atom/IBuild.cs` and the committed YAML should be treated as a 
 4. Run `jb cleanupcode` with the SDK `MSBuild.dll` path and include relevant formatting changes.
 5. Update `README.md` and the affected `docs/` page for consumer-visible behavior.
 6. Regenerate workflows with `atom gen` when `_atom/IBuild.cs` or workflow behavior changes.
+
+## Documentation
+
+Docs follow the shared Invex documentation standard used by every Invex library:
+
+- **README.md** is also the NuGet readme. Keep the fixed section order (title, badges, pitch, Packages, Features,
+  Installation, Quick start, Usage, Documentation, Development, License) and use absolute links only
+  (`https://github.com/Invex-Games/rez/blob/main/...` or the docs site), so they work on nuget.org.
+- **DocFX site** (`docfx.json`, `toc.yml`, `index.md`, `docs/`, `api/index.md`), published to
+  https://invex-games.github.io/rez/. `docs/introduction.md` and `docs/getting-started.md` come first; every page
+  opens with one to three sentences on what it covers and ends with a "See also" or "Next steps" list. Link API
+  types with `<xref:Namespace.Type>`, not file paths.
+- **`api/index.md`** is the only hand-written file under `api/`; everything else there is generated. Put per-type
+  detail in XML docs, not in hand-written API pages.
+- **XML docs are enforced.** `CS1591` is not suppressed for shipped projects, so every public type and member needs
+  `<summary>`, plus `<param>`, `<typeparam>`, `<returns>` and `<exception>` where they apply, `<remarks>` for
+  non-obvious behaviour, and `<see cref>`/`<paramref>`/`<see langword>` for references.
 
 ## Defer to the docs
 
