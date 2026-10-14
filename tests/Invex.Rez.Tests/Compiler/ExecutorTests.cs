@@ -238,4 +238,29 @@ public class ExecutorTests
 
         Executor.Execute("{outer}", resolution).ShouldBe("ok");
     }
+
+    [TestCase(100_000)]
+    public void Execute_ManyUnmatchedOpenBraces_Returns_Input(int count)
+    {
+        var input = new string('{', count);
+
+        Executor.Execute(input, NoMatch).ShouldBe(input);
+    }
+
+    [TestCase(100_000)]
+    public void Execute_UnmatchedOpenBracesAroundVariable_Returns_Value(int count)
+    {
+        var braces = new string('{', count);
+        Func<string, string> resolution = s => s == "a" ? "value" : NoMatch(s);
+
+        Executor.Execute($"{braces}{{a}}", resolution).ShouldBe($"{braces}value");
+    }
+
+    [TestCase(20_000)]
+    public void Execute_DeeplyNestedBraces_Returns_Input(int depth)
+    {
+        var input = $"{new string('{', depth)}a{new string('}', depth)}";
+
+        Executor.Execute(input, _ => null).ShouldBe(input);
+    }
 }
