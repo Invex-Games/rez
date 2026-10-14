@@ -7,7 +7,9 @@
 /// </summary>
 /// <remarks>
 ///     Resolution is recursive: if a resolved value itself contains variables or functions, they are resolved
-///     as well, up to a maximum depth - exceeding it (e.g., via a self-referencing variable) throws an exception.
+///     as well, until the text no longer changes. A variable whose value is its own placeholder (e.g., <c>a = {a}</c>)
+///     is left unchanged; a cycle whose output keeps changing (e.g., <c>a = {b}</c>, <c>b = {a}</c>) exceeds the
+///     maximum depth and throws a <see cref="RezResolutionException" />.
 /// </remarks>
 [PublicAPI]
 public sealed

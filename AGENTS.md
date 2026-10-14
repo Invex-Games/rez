@@ -10,7 +10,7 @@ language and architecture references.
 
 | Project | Role | Target frameworks |
 |---------|------|-------------------|
-| `Invex.Rez` | The core library: `IResolver`/`Resolver`, `IResolverSource`/`ResolverSource`, `IResolverStore`/`ResolverStore`, `FunctionCall`, and the internal compiler pipeline | `net10.0;netstandard2.0` |
+| `Invex.Rez` | The core library: `IResolver`/`Resolver`, `IResolverSource`/`ResolverSource`, `IResolverStore`/`ResolverStore`, `FunctionCall`, `RezResolutionException`, and the internal compiler pipeline | `net10.0;netstandard2.0` |
 | `Invex.Rez.Configuration` | `ConfigResolverSource`, `IResolvableConfig`, and the `AddResolvableConfiguration()` DI extension | `net10.0;netstandard2.0` |
 | `Invex.Rez.Tests` | NUnit test suite covering both the public surface and the internal compiler | `net10.0;net48` |
 | `_atom` | Atom build definition (`IBuild.cs`) that generates the GitHub Actions workflows | `net10.0` |
@@ -77,6 +77,8 @@ Two layers, deliberately separated:
     it.
   - `FunctionCall` — carries the raw argument text (`Args`) to a function delegate. Functions own
     all argument parsing; Rez never splits or trims.
+  - `RezResolutionException` — thrown when recursion exceeds the 4096 depth limit; derives from
+    `Exception`.
 - **Internal compiler** (`Invex.Rez.Compiler`): `Executor` drives a
   lex → tokenize → render loop until the output stabilizes, operating on `ArrayPool`-rented
   buffers and spans. `Lexer` splits text into literals/braces (backslash escapes), `Tokenizer`
@@ -92,7 +94,9 @@ resolved **on read** and pass through **unmodified on write**.
 - **Unresolvable placeholders are left in the output unchanged** — missing variables never throw.
 - **Sources are queried in registration order**; first non-null result wins.
 - **Resolution is recursive and inside-out, left-to-right**, with a hard limit of **4096**
-  passes — exceeding it throws.
+  nested substitution depth (not total substitutions; any number of flat placeholders is fine) —
+  exceeding it throws `RezResolutionException` (derives from `Exception`). A direct
+  self-reference (`a = {a}`) stabilises after one pass and does not throw.
 - **Escapes are preserved**: `\{example\}` resolves to `\{example\}` (backslashes are *not*
   stripped from the output). Don't "fix" this to strip them — the test suite pins it.
 - **Function delegates must never return null**; sources return `null` from
