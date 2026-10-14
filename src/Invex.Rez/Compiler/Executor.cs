@@ -7,6 +7,13 @@ namespace Invex.Rez.Compiler;
 internal static class Executor
 {
     /// <summary>
+    ///     The maximum substitution depth: how many times text produced by resolving a placeholder may itself
+    ///     contain a placeholder that is resolved in turn (e.g., <c>{a}</c> to <c>{b}</c> to <c>{c}</c> is depth 3).
+    ///     Placeholders written in the template itself are depth 1, however many there are.
+    /// </summary>
+    internal const int MaxResolutionDepth = 4096;
+
+    /// <summary>
     ///     Executes the compilation pipeline over the given input.
     /// </summary>
     /// <param name="input">The template text to resolve.</param>
@@ -15,11 +22,24 @@ internal static class Executor
     ///     or returns <see langword="null" /> if it cannot be resolved.
     /// </param>
     /// <returns>The fully resolved text, or <see langword="null" /> if <paramref name="input" /> is <see langword="null" />.</returns>
+    /// <exception cref="RezResolutionException">
+    ///     Thrown if a substitution would exceed <see cref="MaxResolutionDepth" />, such as for a cycle like
+    ///     <c>a = {b}</c>, <c>b = {a}</c>, or a value that contains its own placeholder plus other text.
+    /// </exception>
     /// <remarks>
     ///     Each pass resolves at most one placeholder; passes repeat until the text no longer changes.
     ///     This naturally handles nested and recursive resolutions.
-    ///     A maximum depth guards against infinite recursion (e.g., a variable that resolves to itself).
-    ///     Buffers are rented from <see cref="ArrayPool{T}" /> to avoid per-call allocations.
+    ///     A placeholder whose value is its own placeholder text (e.g., <c>a = {a}</c>) leaves the text unchanged,
+    ///     so resolution simply stops there.
+    ///     <br />
+    ///     Every character carries the depth of the substitution that produced it (0 for template text).
+    ///     A placeholder resolves at one more than the deepest character it spans, and its value's characters
+    ///     take that depth. Runaway resolution (a changing cycle or an ever-growing expansion) therefore keeps
+    ///     getting deeper and hits <see cref="MaxResolutionDepth" />, while any number of independent
+    ///     placeholders in a template or value does not count against the limit.
+    ///     <br />
+    ///     Buffers are rented from <see cref="ArrayPool{T}" /> and grown as needed, so templates and resolved
+    ///     values of any length are supported without per-pass allocations.
     /// </remarks>
     public static string? Execute(string? input, Func<string, string?> resolution)
     {
@@ -29,83 +49,106 @@ internal static class Executor
         if (input.Length == 0)
             return string.Empty;
 
-        var lexemeArray = ArrayPool<Lexeme>.Shared.Rent(4096);
-        var lexemeBuffer = lexemeArray.AsSpan();
+        // Each character produces at most one lexeme, and each lexeme at most one token.
+        var lexemeArray = ArrayPool<Lexeme>.Shared.Rent(input.Length);
+        var tokenArray = ArrayPool<SyntaxToken>.Shared.Rent(input.Length);
+        var sourceArray = ArrayPool<char>.Shared.Rent(input.Length);
+        var destArray = ArrayPool<char>.Shared.Rent(input.Length);
 
-        var tokenArray = ArrayPool<SyntaxToken>.Shared.Rent(4096);
-        var tokenBuffer = tokenArray.AsSpan();
+        // The substitution depth of each character in the source / dest text.
+        var sourceDepthArray = ArrayPool<int>.Shared.Rent(input.Length);
+        var destDepthArray = ArrayPool<int>.Shared.Rent(input.Length);
 
-        var primaryTextArray = ArrayPool<char>.Shared.Rent(4096);
-        var primaryTextBuffer = primaryTextArray.AsSpan();
-        var secondaryTextArray = ArrayPool<char>.Shared.Rent(4096);
-        var secondaryTextBuffer = secondaryTextArray.AsSpan();
-
-        var swapBuffer = false;
-
-        input
-            .AsSpan()
-            .CopyTo(primaryTextBuffer);
-
-        var inputLength = input.Length;
-        int outputLength;
-
-        var resolutionDepth = 0;
-
-        while (true)
+        try
         {
-            if (resolutionDepth > 4096)
-                throw new("Resolution depth exceeded.");
+            input
+                .AsSpan()
+                .CopyTo(sourceArray);
 
-            var sourceBuffer = swapBuffer
-                ? secondaryTextBuffer
-                : primaryTextBuffer;
+            sourceDepthArray
+                .AsSpan(0, input.Length)
+                .Clear();
 
-            var destBuffer = swapBuffer
-                ? primaryTextBuffer
-                : secondaryTextBuffer;
+            var textLength = input.Length;
 
-            var lexemeLength = Lexer.Lex(sourceBuffer[..inputLength], lexemeBuffer);
-            var tokenLength = Tokenizer.TokenizeLexemes(lexemeBuffer[..lexemeLength], tokenBuffer);
-
-            outputLength = Renderer.Render(tokenBuffer[..tokenLength],
-                sourceBuffer[..inputLength],
-                destBuffer,
-                resolution);
-
-            swapBuffer = !swapBuffer;
-
-            var render = false;
-
-            if (outputLength != inputLength)
-                render = true;
-            else
-                for (var i = 0; i < outputLength; i++)
+            while (true)
+            {
+                if (lexemeArray.Length < textLength)
                 {
-                    if (destBuffer[i] == sourceBuffer[i])
-                        continue;
-
-                    render = true;
-
-                    break;
+                    var grown = ArrayPool<Lexeme>.Shared.Rent(textLength);
+                    ArrayPool<Lexeme>.Shared.Return(lexemeArray);
+                    lexemeArray = grown;
                 }
 
-            if (!render)
-                break;
+                if (tokenArray.Length < textLength)
+                {
+                    var grown = ArrayPool<SyntaxToken>.Shared.Rent(textLength);
+                    ArrayPool<SyntaxToken>.Shared.Return(tokenArray);
+                    tokenArray = grown;
+                }
 
-            inputLength = outputLength;
-            resolutionDepth++;
+                var sourceText = sourceArray.AsSpan(0, textLength);
+                var sourceDepths = sourceDepthArray.AsSpan(0, textLength);
+
+                var lexemeLength = Lexer.Lex(sourceText, lexemeArray);
+                var tokenLength = Tokenizer.TokenizeLexemes(lexemeArray.AsSpan(0, lexemeLength), tokenArray);
+
+                if (!Renderer.TryFindSubstitution(tokenArray.AsSpan(0, tokenLength),
+                        sourceText,
+                        resolution,
+                        out var variableStart,
+                        out var variableLength,
+                        out var value))
+                    break;
+
+                var depth = 0;
+
+                foreach (var characterDepth in sourceDepths.Slice(variableStart, variableLength))
+                    if (characterDepth > depth)
+                        depth = characterDepth;
+
+                depth++;
+
+                if (depth > MaxResolutionDepth)
+                    throw new RezResolutionException("Resolution depth exceeded.");
+
+                var outputLength = textLength - variableLength + value.Length;
+
+                if (destArray.Length < outputLength)
+                {
+                    var grown = ArrayPool<char>.Shared.Rent(outputLength);
+                    ArrayPool<char>.Shared.Return(destArray);
+                    destArray = grown;
+                }
+
+                if (destDepthArray.Length < outputLength)
+                {
+                    var grown = ArrayPool<int>.Shared.Rent(outputLength);
+                    ArrayPool<int>.Shared.Return(destDepthArray);
+                    destDepthArray = grown;
+                }
+
+                textLength = Renderer.Substitute(sourceText, variableStart, variableLength, value, destArray);
+
+                var destDepths = destDepthArray.AsSpan(0, textLength);
+                sourceDepths[..variableStart].CopyTo(destDepths);
+                destDepths.Slice(variableStart, value.Length).Fill(depth);
+                sourceDepths[(variableStart + variableLength)..].CopyTo(destDepths[(variableStart + value.Length)..]);
+
+                (sourceArray, destArray) = (destArray, sourceArray);
+                (sourceDepthArray, destDepthArray) = (destDepthArray, sourceDepthArray);
+            }
+
+            return new(sourceArray, 0, textLength);
         }
-
-        var output = (swapBuffer
-                ? secondaryTextBuffer
-                : primaryTextBuffer)[..outputLength]
-            .ToString();
-
-        ArrayPool<char>.Shared.Return(primaryTextArray);
-        ArrayPool<char>.Shared.Return(secondaryTextArray);
-        ArrayPool<Lexeme>.Shared.Return(lexemeArray);
-        ArrayPool<SyntaxToken>.Shared.Return(tokenArray);
-
-        return output;
+        finally
+        {
+            ArrayPool<char>.Shared.Return(sourceArray);
+            ArrayPool<char>.Shared.Return(destArray);
+            ArrayPool<int>.Shared.Return(sourceDepthArray);
+            ArrayPool<int>.Shared.Return(destDepthArray);
+            ArrayPool<Lexeme>.Shared.Return(lexemeArray);
+            ArrayPool<SyntaxToken>.Shared.Return(tokenArray);
+        }
     }
 }

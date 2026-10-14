@@ -32,7 +32,7 @@ var greeting = resolver.Resolve("Hello, {name}!");
 - **Variables.** `{name}` is replaced with its value.
 - **Functions.** `{repeat(abc,3)}` invokes a function with the raw argument text.
 - **Nesting.** `{variable{number}}` resolves inside-out, left-to-right.
-- **Recursion.** Resolved values may themselves contain placeholders, with a 4096-pass limit.
+- **Recursion.** Resolved values may themselves contain placeholders, with a nesting limit of 4096.
 - **Escaping.** `\{literal\}` excludes braces from resolution (the backslashes are preserved in the output).
 - **Pluggable sources.** Layer any number of variable and function sources; the first non-null result wins.
 - **Graceful fallback.** Unresolvable placeholders are left in the output unchanged, and `Resolve(null)` returns `null`.

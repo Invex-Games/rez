@@ -16,89 +16,95 @@ internal static class Tokenizer
     ///     For nested braces (e.g., <c>{outer{inner}}</c>), the innermost pair produces the variable token,
     ///     allowing inner placeholders to be resolved before outer ones across successive
     ///     <see cref="Executor" /> passes. Unmatched open braces with no nested variables fall back to literals.
+    ///     <br />
+    ///     Open braces are tracked on an explicit stack rather than by recursion, so arbitrarily deep nesting
+    ///     or long runs of unmatched braces cannot overflow the call stack.
     /// </remarks>
     public static int TokenizeLexemes(Span<Lexeme> lexemes, Span<SyntaxToken> tokens)
     {
-        var lexemeIndex = 0;
+        Frame[]? frames = null;
+        var frameCount = 0;
         var tokenIndex = 0;
 
-        while (lexemeIndex < lexemes.Length)
+        try
         {
-            var result = lexemes[lexemeIndex].Type == Lexeme.OpenBrace
-                ? TokenizeNonLiteralLexeme(lexemes[lexemeIndex..], tokens[tokenIndex..])
-                : TokenizeLiteralLexeme(lexemes[lexemeIndex..], tokens[tokenIndex..]);
-
-            lexemeIndex += result.ConsumedLexemes;
-            tokenIndex += result.ProducedTokens;
-        }
-
-        return tokenIndex;
-    }
-
-    /// <summary>
-    ///     Emits a literal token for a single literal lexeme.
-    /// </summary>
-    private static SyntaxResult TokenizeLiteralLexeme(Span<Lexeme> lexemes, Span<SyntaxToken> tokens)
-    {
-        var lexeme = lexemes[0];
-        tokens[0] = SyntaxToken.CreateLiteral(lexeme.Start, lexeme.Length);
-
-        return new(1, 1);
-    }
-
-    /// <summary>
-    ///     Tokenizes a span of lexemes beginning with an open brace, recursing into any nested braces.
-    ///     Produces a variable token when a matching close brace is found; otherwise falls back to literals.
-    /// </summary>
-    private static SyntaxResult TokenizeNonLiteralLexeme(Span<Lexeme> lexemes, Span<SyntaxToken> tokens)
-    {
-        if (lexemes.Length == 1)
-        {
-            tokens[0] = SyntaxToken.CreateLiteral(lexemes[0].Start, lexemes[0].Length);
-
-            return new(1, 1);
-        }
-
-        var firstLexeme = lexemes[1];
-
-        var lexemeIndex = 1;
-        var tokenIndex = 0;
-
-        while (lexemeIndex < lexemes.Length)
-        {
-            var lexeme = lexemes[lexemeIndex];
-
-            if (lexeme.Type == Lexeme.CloseBrace)
+            for (var lexemeIndex = 0; lexemeIndex < lexemes.Length; lexemeIndex++)
             {
-                tokens[tokenIndex++] = SyntaxToken.CreateVariable(firstLexeme.Start, lexeme.Start - firstLexeme.Start);
+                var lexeme = lexemes[lexemeIndex];
 
-                return new(lexemeIndex + 1, tokenIndex);
+                switch (lexeme.Type)
+                {
+                    case Lexeme.OpenBrace:
+                    {
+                        frames ??= ArrayPool<Frame>.Shared.Rent(lexemes.Length);
+                        frames[frameCount++] = new(lexemeIndex, tokenIndex, false);
+
+                        break;
+                    }
+
+                    case Lexeme.CloseBrace when frameCount > 0:
+                    {
+                        // The variable spans from the lexeme after the open brace up to this close brace.
+                        var firstLexeme = lexemes[frames![--frameCount].LexemeIndex + 1];
+
+                        tokens[tokenIndex++] =
+                            SyntaxToken.CreateVariable(firstLexeme.Start, lexeme.Start - firstLexeme.Start);
+
+                        if (frameCount > 0)
+                            frames[frameCount - 1] = frames[frameCount - 1] with { HasVariable = true };
+
+                        break;
+                    }
+
+                    default:
+                    {
+                        tokens[tokenIndex++] = SyntaxToken.CreateLiteral(lexeme.Start, lexeme.Length);
+
+                        break;
+                    }
+                }
             }
 
-            var result = lexeme.Type == Lexeme.OpenBrace
-                ? TokenizeNonLiteralLexeme(lexemes[lexemeIndex..], tokens[tokenIndex..])
-                : TokenizeLiteralLexeme(lexemes[lexemeIndex..], tokens[tokenIndex..]);
+            // Unmatched open braces, innermost first. A brace with any nested variable keeps its tokens so the
+            // variables are evaluated first; otherwise everything from the brace to the end becomes one literal.
+            var unmatchedLength = 0;
+            var lengthFromIndex = lexemes.Length;
 
-            lexemeIndex += result.ConsumedLexemes;
-            tokenIndex += result.ProducedTokens;
+            while (frameCount > 0)
+            {
+                var frame = frames![--frameCount];
+
+                for (var i = frame.LexemeIndex; i < lengthFromIndex; i++)
+                    unmatchedLength += lexemes[i].Length;
+
+                lengthFromIndex = frame.LexemeIndex;
+
+                if (frame.HasVariable)
+                {
+                    if (frameCount > 0)
+                        frames[frameCount - 1] = frames[frameCount - 1] with { HasVariable = true };
+
+                    continue;
+                }
+
+                tokenIndex = frame.TokenIndex;
+                tokens[tokenIndex++] = SyntaxToken.CreateLiteral(lexemes[frame.LexemeIndex].Start, unmatchedLength);
+            }
+
+            return tokenIndex;
         }
-
-        // Handle case where there is no closing brace
-
-        for (var i = 0; i < tokenIndex; i++)
-
-            // If there are any nested non-literals, then they will be evaluated first so we can just return
-            if (tokens[i].Type == SyntaxToken.Variable)
-                return new(lexemes.Length, tokenIndex);
-
-        var charLength = 0;
-
-        foreach (var lexeme in lexemes)
-            charLength += lexeme.Length;
-
-        // If there are no nested non-literals, then we can just treat the whole thing as a literal
-        tokens[0] = SyntaxToken.CreateLiteral(lexemes[0].Start, charLength);
-
-        return new(lexemes.Length, 1);
+        finally
+        {
+            if (frames is not null)
+                ArrayPool<Frame>.Shared.Return(frames);
+        }
     }
+
+    /// <summary>
+    ///     An open brace awaiting its matching close brace.
+    /// </summary>
+    /// <param name="LexemeIndex">The index of the open brace lexeme.</param>
+    /// <param name="TokenIndex">The index of the first token produced after the open brace.</param>
+    /// <param name="HasVariable">Whether a variable token has been produced inside this brace.</param>
+    private readonly record struct Frame(int LexemeIndex, int TokenIndex, bool HasVariable);
 }

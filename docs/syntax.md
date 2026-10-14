@@ -66,8 +66,12 @@ chain2 = variableValue1
 ```
 
 > [!NOTE]
-> There is a hard limit of 4096 recursions in a single template to prevent infinite loops.
-> Exceeding the limit (e.g., a variable that resolves to itself) throws an exception.
+> Recursion is limited to a depth of 4096 to prevent infinite loops. Depth counts how many times
+> a resolved value leads to another resolution (`{chain1}` above has depth 2), not how many
+> placeholders a template contains, so a template with any number of independent placeholders is
+> fine. A cycle whose output keeps changing (e.g., `a = {b}` and `b = {a}`) or a value that keeps
+> expanding (e.g., `a = x{a}`) exceeds the limit and throws a `RezResolutionException`. A variable that resolves to its own placeholder (e.g., `a = {a}`) does not:
+> the text stops changing, so `{a}` is returned unchanged.
 
 ### When a variable is not found
 
