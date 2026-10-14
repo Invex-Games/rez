@@ -53,7 +53,7 @@ For `Microsoft.Extensions.Configuration` integration, install the additional pac
 dotnet add package Invex.Rez.Configuration
 ```
 
-Both packages target `net10.0`, `net9.0`, `net8.0`, and `netstandard2.0`. On `netstandard2.0`,
+Both packages target `net10.0` and `netstandard2.0`. On `netstandard2.0`,
 `Invex.Rez` depends on `System.Buffers` and `System.Memory`. `Invex.Rez.Configuration` depends on
 `Microsoft.Extensions.Configuration.Abstractions` and
 `Microsoft.Extensions.DependencyInjection.Abstractions`.
