@@ -32,8 +32,9 @@ public interface IResolver
     /// <param name="input">The template text containing variables and/or functions to be resolved.</param>
     /// <returns>The resolved output text, or <see langword="null" /> if <paramref name="input" /> is <see langword="null" />.</returns>
     /// <exception cref="RezResolutionException">
-    ///     Thrown if resolution does not settle within 4096 substitution passes, such as for a cycle like
-    ///     <c>a = {b}</c>, <c>b = {a}</c>.
+    ///     Thrown if recursion exceeds a depth of 4096 (a resolved value containing a placeholder that is
+    ///     resolved in turn, and so on), such as for a cycle like <c>a = {b}</c>, <c>b = {a}</c>.
+    ///     The number of placeholders in a template is not limited.
     /// </exception>
     /// <remarks>
     ///     Variables are written as <c>{name}</c> and functions as <c>{name(args)}</c>.<br />

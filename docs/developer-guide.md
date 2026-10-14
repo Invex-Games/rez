@@ -58,8 +58,8 @@ responsible for all parsing; Rez performs no splitting or trimming.
 
 ### `RezResolutionException`
 
-Thrown by `Resolve` when resolution does not settle within 4096 passes, for example a cycle such
-as `a = {b}`, `b = {a}`. It derives from `Exception`, so existing `catch (Exception)` handlers
+Thrown by `Resolve` when recursion exceeds the depth limit of 4096, for example a cycle such as
+`a = {b}`, `b = {a}`. It derives from `Exception`, so existing `catch (Exception)` handlers
 still catch it.
 
 ## Built-in implementations
@@ -137,9 +137,11 @@ Understanding the pipeline helps explain the behavior described in the
    literal text.
 3. **Rendering** — the first resolvable placeholder (left to right) is substituted with its value.
 4. **Repeat** — the pipeline runs again on the new text, until a pass produces no change. This is
-   what enables nested and recursive resolution. A hard limit of 4096 passes guards against
-   cycles whose output keeps changing (e.g., `a = {b}`, `b = {a}`) — exceeding it throws a
-   `RezResolutionException`.
+   what enables nested and recursive resolution. Each character remembers the depth of the
+   substitution that produced it (0 for template text); a placeholder resolves at one more than
+   the deepest character it spans. A depth limit of 4096 stops cycles whose output keeps
+   changing (e.g., `a = {b}`, `b = {a}`) and ever-growing expansions (e.g., `a = x{a}`) —
+   exceeding it throws a `RezResolutionException`. The number of placeholders is not limited.
 
 For each placeholder, the resolver first checks whether the contents match the function shape
 (`name(args)`); if a source resolves the function, its delegate is invoked with a `FunctionCall`
@@ -158,10 +160,12 @@ calls against a fixed set of sources are safe, but mutating sources (`AddSource`
 provide your own synchronization if you need runtime mutation under concurrency.
 
 > [!WARNING]
-> Resolution depth is capped at 4096 passes. A cycle whose output keeps changing (for example,
-> `a = {b}` and `b = {a}`) exceeds it and throws a `RezResolutionException` (which derives from
-> `Exception`) with the message `Resolution depth exceeded.` A direct self-reference such as `a = {a}` does not: its first pass
-> produces identical text, so resolution stops and returns `{a}` unchanged.
+> Resolution depth is capped at 4096 nested substitutions (a resolved value containing a
+> placeholder that is resolved in turn, and so on). A cycle whose output keeps changing (for
+> example, `a = {b}` and `b = {a}`) exceeds it and throws a `RezResolutionException` (which
+> derives from `Exception`) with the message `Resolution depth exceeded.` A direct self-reference
+> such as `a = {a}` does not: its first pass produces identical text, so resolution stops and
+> returns `{a}` unchanged. Templates with many independent placeholders are not affected.
 
 ## Tips and best practices
 
