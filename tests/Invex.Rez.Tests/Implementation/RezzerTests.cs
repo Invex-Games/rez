@@ -207,7 +207,7 @@ public class RezzerTests
     }
 
     [Test]
-    public void Resolve_CircularReferences_Throws_Exception()
+    public void Resolve_CircularReferences_Throws_RezResolutionException()
     {
         var resolver = new Resolver();
 
@@ -216,7 +216,9 @@ public class RezzerTests
             new("variableName1", "{variableName2}"), new("variableName2", "{variableName1}"),
         }));
 
-        Should.Throw<Exception>(() => resolver.Resolve("prefix_{variableName1}_postfix"));
+        var exception = Should.Throw<RezResolutionException>(() => resolver.Resolve("prefix_{variableName1}_postfix"));
+
+        exception.Message.ShouldBe("Resolution depth exceeded.");
     }
 
     [Test]

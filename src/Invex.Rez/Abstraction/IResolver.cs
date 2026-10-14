@@ -31,12 +31,17 @@ public interface IResolver
     /// </summary>
     /// <param name="input">The template text containing variables and/or functions to be resolved.</param>
     /// <returns>The resolved output text, or <see langword="null" /> if <paramref name="input" /> is <see langword="null" />.</returns>
+    /// <exception cref="RezResolutionException">
+    ///     Thrown if resolution does not settle within 4096 substitution passes, such as for a cycle like
+    ///     <c>a = {b}</c>, <c>b = {a}</c>.
+    /// </exception>
     /// <remarks>
     ///     Variables are written as <c>{name}</c> and functions as <c>{name(args)}</c>.<br />
     ///     Braces can be escaped with a backslash (e.g., <c>\{notAVariable\}</c>) to exclude them from
     ///     resolution; the backslashes are preserved in the output.<br />
     ///     Resolution is recursive: if a resolved value itself contains variables or functions,
-    ///     they are resolved as well.<br />
+    ///     they are resolved as well, until the text no longer changes. A placeholder whose value is its own
+    ///     placeholder text (e.g., <c>a = {a}</c>) is left as is; a cycle whose output keeps changing throws.<br />
     ///     Placeholders that no source can resolve are left in the output unchanged.
     /// </remarks>
     /// <example>

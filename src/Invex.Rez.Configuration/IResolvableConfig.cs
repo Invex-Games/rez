@@ -21,5 +21,9 @@ public interface IResolvableConfig : IConfigurationRoot
     /// </summary>
     /// <param name="value">The template text containing variables and/or functions to be resolved.</param>
     /// <returns>The resolved output text, or <see langword="null" /> if <paramref name="value" /> is <see langword="null" />.</returns>
+    /// <exception cref="RezResolutionException">
+    ///     Thrown by the default <see cref="IResolver" /> if resolution does not settle, such as for a cycle like
+    ///     <c>a = {b}</c>, <c>b = {a}</c>.
+    /// </exception>
     string? Resolve(string? value);
 }
