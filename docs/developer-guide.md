@@ -56,6 +56,12 @@ A readonly record struct passed to function delegates. Its single property, `Arg
 raw text between the parentheses — for `{repeat(abc,3)}` that's `"abc,3"`. The function is
 responsible for all parsing; Rez performs no splitting or trimming.
 
+### `RezResolutionException`
+
+Thrown by `Resolve` when resolution does not settle within 4096 passes, for example a cycle such
+as `a = {b}`, `b = {a}`. It derives from `Exception`, so existing `catch (Exception)` handlers
+still catch it.
+
 ## Built-in implementations
 
 All implementations live in the `Invex.Rez.Implementation` namespace.
@@ -132,8 +138,8 @@ Understanding the pipeline helps explain the behavior described in the
 3. **Rendering** — the first resolvable placeholder (left to right) is substituted with its value.
 4. **Repeat** — the pipeline runs again on the new text, until a pass produces no change. This is
    what enables nested and recursive resolution. A hard limit of 4096 passes guards against
-   infinite recursion (e.g., a variable that resolves to itself) — exceeding it throws an
-   exception.
+   cycles whose output keeps changing (e.g., `a = {b}`, `b = {a}`) — exceeding it throws a
+   `RezResolutionException`.
 
 For each placeholder, the resolver first checks whether the contents match the function shape
 (`name(args)`); if a source resolves the function, its delegate is invoked with a `FunctionCall`
@@ -141,7 +147,8 @@ containing the argument text. Otherwise the contents are treated as a variable n
 resolves, the placeholder is left in the output unchanged.
 
 The pipeline operates on pooled buffers (`ArrayPool`) and spans, so resolution does not allocate
-per pass.
+per pass. Buffers are rented at the size each pass needs, so templates and resolved values of any
+length are supported.
 
 ### Thread safety
 
@@ -152,8 +159,8 @@ provide your own synchronization if you need runtime mutation under concurrency.
 
 > [!WARNING]
 > Resolution depth is capped at 4096 passes. A cycle whose output keeps changing (for example,
-> `a = {b}` and `b = {a}`) exceeds it and throws an `Exception` with the message
-> `Resolution depth exceeded.` A direct self-reference such as `a = {a}` does not: its first pass
+> `a = {b}` and `b = {a}`) exceeds it and throws a `RezResolutionException` (which derives from
+> `Exception`) with the message `Resolution depth exceeded.` A direct self-reference such as `a = {a}` does not: its first pass
 > produces identical text, so resolution stops and returns `{a}` unchanged.
 
 ## Tips and best practices
@@ -181,6 +188,7 @@ templates that can be easily maintained and updated.
 - [Configuration Integration](configuration.md): `ConfigResolverSource` and `IResolvableConfig`
 - [Examples](examples.md): multi-source examples
 - <xref:Invex.Rez.Abstraction.IResolver>, <xref:Invex.Rez.Abstraction.IResolverSource>,
-  <xref:Invex.Rez.Abstraction.IResolverStore>, <xref:Invex.Rez.Abstraction.FunctionCall>
+  <xref:Invex.Rez.Abstraction.IResolverStore>, <xref:Invex.Rez.Abstraction.FunctionCall>,
+  <xref:Invex.Rez.Abstraction.RezResolutionException>
 - <xref:Invex.Rez.Implementation.Resolver>, <xref:Invex.Rez.Implementation.ResolverSource>,
   <xref:Invex.Rez.Implementation.ResolverStore>
