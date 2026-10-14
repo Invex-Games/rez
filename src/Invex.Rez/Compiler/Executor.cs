@@ -75,14 +75,16 @@ internal static class Executor
             {
                 if (lexemeArray.Length < textLength)
                 {
+                    var grown = ArrayPool<Lexeme>.Shared.Rent(textLength);
                     ArrayPool<Lexeme>.Shared.Return(lexemeArray);
-                    lexemeArray = ArrayPool<Lexeme>.Shared.Rent(textLength);
+                    lexemeArray = grown;
                 }
 
                 if (tokenArray.Length < textLength)
                 {
+                    var grown = ArrayPool<SyntaxToken>.Shared.Rent(textLength);
                     ArrayPool<SyntaxToken>.Shared.Return(tokenArray);
-                    tokenArray = ArrayPool<SyntaxToken>.Shared.Rent(textLength);
+                    tokenArray = grown;
                 }
 
                 var sourceText = sourceArray.AsSpan(0, textLength);
@@ -114,14 +116,16 @@ internal static class Executor
 
                 if (destArray.Length < outputLength)
                 {
+                    var grown = ArrayPool<char>.Shared.Rent(outputLength);
                     ArrayPool<char>.Shared.Return(destArray);
-                    destArray = ArrayPool<char>.Shared.Rent(outputLength);
+                    destArray = grown;
                 }
 
                 if (destDepthArray.Length < outputLength)
                 {
+                    var grown = ArrayPool<int>.Shared.Rent(outputLength);
                     ArrayPool<int>.Shared.Return(destDepthArray);
-                    destDepthArray = ArrayPool<int>.Shared.Rent(outputLength);
+                    destDepthArray = grown;
                 }
 
                 textLength = Renderer.Substitute(sourceText, variableStart, variableLength, value, destArray);
