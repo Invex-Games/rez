@@ -174,7 +174,7 @@ Full documentation: [https://invex-games.github.io/rez/](https://invex-games.git
 
 ## Development
 
-The repository requires the .NET 10 SDK selected by `global.json`:
+The repository requires the .NET 11 SDK selected by `global.json`:
 
 ```shell
 dotnet build Invex.Rez.slnx

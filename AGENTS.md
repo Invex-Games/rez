@@ -21,7 +21,7 @@ the DocFX documentation site is configured by `docfx.json` with content in `docs
 
 ## Build, test, cleanup & documentation
 
-The .NET 10 SDK is required and is selected by `global.json`. Build and test the complete solution
+The .NET 11 SDK is required and is selected by `global.json`. Build and test the complete solution
 from the repository root:
 
 ```shell
@@ -48,12 +48,12 @@ Build the DocFX site with `docfx docfx.json`; add `--serve` to preview it locall
 
 ## Build & language conventions
 
-- **.NET 10 SDK** is required (`global.json`); the library packages also target `netstandard2.0`
+- **.NET 11 SDK** is required (`global.json`); the library packages also target `netstandard2.0`
   and tests also run on `net48`, so changes must compile against older surface areas — the
   **Polyfill**, `System.Buffers`, and `System.Memory` packages cover the gaps. Use
   `#if NET8_0_OR_GREATER` conditionals where APIs differ (see `Resolver.FunctionRegex` and the
   `GetValueOrDefault` call sites for the established pattern).
-- C# `LangVersion` 14, `ImplicitUsings` and `Nullable` enabled, `TreatWarningsAsErrors` on.
+- C# `LangVersion` 15, `ImplicitUsings` and `Nullable` enabled, `TreatWarningsAsErrors` on.
 - Global usings live in each project's `_usings.cs` — add shared usings there, not per-file.
   `Invex.Rez/_usings.cs` also declares `InternalsVisibleTo("Invex.Rez.Tests")`.
 - `GenerateDocumentationFile` is on and `CS1591` is enforced for the shipped `src/` projects, so a
