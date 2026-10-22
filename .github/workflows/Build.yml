@@ -158,7 +158,7 @@ jobs:
     permissions:
       contents: write
     needs: [ TestProjects, PackProjects, SetupBuildInfo ]
-    if: contains(needs.SetupBuildInfo.outputs.build-version, '-') == false
+    if: ${{ !contains(needs.SetupBuildInfo.outputs.build-version, '-') }}
     runs-on: ubuntu-latest
     steps:
 
@@ -220,7 +220,7 @@ jobs:
     permissions:
       contents: write
     needs: [ SetupBuildInfo, BuildDocs ]
-    if: contains(needs.SetupBuildInfo.outputs.build-version, '-') == false
+    if: ${{ !contains(needs.SetupBuildInfo.outputs.build-version, '-') }}
     runs-on: ubuntu-latest
     steps:
 
