@@ -53,7 +53,7 @@ For `Microsoft.Extensions.Configuration` integration, install the additional pac
 dotnet add package Invex.Rez.Configuration
 ```
 
-Both packages target `net10.0` and `netstandard2.0`. On `netstandard2.0`,
+Both packages target `net10.0`, `net11.0` and `netstandard2.0`. On `netstandard2.0`,
 `Invex.Rez` depends on `System.Buffers` and `System.Memory`. `Invex.Rez.Configuration` depends on
 `Microsoft.Extensions.Configuration.Abstractions` and
 `Microsoft.Extensions.DependencyInjection.Abstractions`.
@@ -174,7 +174,7 @@ Full documentation: [https://invex-games.github.io/rez/](https://invex-games.git
 
 ## Development
 
-The repository requires the .NET 10 SDK selected by `global.json`:
+The repository requires the .NET 11 SDK selected by `global.json`, plus the .NET 10 runtime (or SDK) for the `net10.0` tests and build project:
 
 ```shell
 dotnet build Invex.Rez.slnx
