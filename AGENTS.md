@@ -21,7 +21,7 @@ the DocFX documentation site is configured by `docfx.json` with content in `docs
 
 ## Build, test, cleanup & documentation
 
-The .NET 11 SDK is required and is selected by `global.json`. Build and test the complete solution
+The .NET 11 SDK is required and is selected by `global.json`; the .NET 10 runtime (or SDK) is needed too for the `net10.0` tests and build project. Build and test the complete solution
 from the repository root:
 
 ```shell
