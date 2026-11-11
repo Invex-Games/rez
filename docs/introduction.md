@@ -75,7 +75,7 @@ Rez is not a good fit when:
 | `Invex.Rez` | The core templating library: resolver, sources, and store |
 | `Invex.Rez.Configuration` | Integration with `Microsoft.Extensions.Configuration` and dependency injection |
 
-Both packages target `net10.0` and `netstandard2.0`.
+Both packages target `net10.0`, `net11.0` and `netstandard2.0`.
 
 ## Next steps
 

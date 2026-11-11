@@ -10,9 +10,9 @@ language and architecture references.
 
 | Project | Role | Target frameworks |
 |---------|------|-------------------|
-| `Invex.Rez` | The core library: `IResolver`/`Resolver`, `IResolverSource`/`ResolverSource`, `IResolverStore`/`ResolverStore`, `FunctionCall`, `RezResolutionException`, and the internal compiler pipeline | `net10.0;netstandard2.0` |
-| `Invex.Rez.Configuration` | `ConfigResolverSource`, `IResolvableConfig`, and the `AddResolvableConfiguration()` DI extension | `net10.0;netstandard2.0` |
-| `Invex.Rez.Tests` | NUnit test suite covering both the public surface and the internal compiler | `net10.0;net48` |
+| `Invex.Rez` | The core library: `IResolver`/`Resolver`, `IResolverSource`/`ResolverSource`, `IResolverStore`/`ResolverStore`, `FunctionCall`, `RezResolutionException`, and the internal compiler pipeline | `net10.0;net11.0;netstandard2.0` |
+| `Invex.Rez.Configuration` | `ConfigResolverSource`, `IResolvableConfig`, and the `AddResolvableConfiguration()` DI extension | `net10.0;net11.0;netstandard2.0` |
+| `Invex.Rez.Tests` | NUnit test suite covering both the public surface and the internal compiler | `net10.0;net11.0;net48` |
 | `_atom` | Atom build definition (`IBuild.cs`) that generates the GitHub Actions workflows | `net10.0` |
 
 Sources live under `src/`, tests under `tests/`, the Atom build definition under `_atom/`, and
@@ -21,7 +21,7 @@ the DocFX documentation site is configured by `docfx.json` with content in `docs
 
 ## Build, test, cleanup & documentation
 
-The .NET 10 SDK is required and is selected by `global.json`. Build and test the complete solution
+The .NET 11 SDK is required and is selected by `global.json`; the .NET 10 runtime (or SDK) is needed too for the `net10.0` tests and build project. Build and test the complete solution
 from the repository root:
 
 ```shell
@@ -48,12 +48,12 @@ Build the DocFX site with `docfx docfx.json`; add `--serve` to preview it locall
 
 ## Build & language conventions
 
-- **.NET 10 SDK** is required (`global.json`); the library packages also target `netstandard2.0`
+- **.NET 11 SDK** is required (`global.json`); the library packages also target `netstandard2.0`
   and tests also run on `net48`, so changes must compile against older surface areas — the
   **Polyfill**, `System.Buffers`, and `System.Memory` packages cover the gaps. Use
   `#if NET8_0_OR_GREATER` conditionals where APIs differ (see `Resolver.FunctionRegex` and the
   `GetValueOrDefault` call sites for the established pattern).
-- C# `LangVersion` 14, `ImplicitUsings` and `Nullable` enabled, `TreatWarningsAsErrors` on.
+- C# `LangVersion` 15, `ImplicitUsings` and `Nullable` enabled, `TreatWarningsAsErrors` on.
 - Global usings live in each project's `_usings.cs` — add shared usings there, not per-file.
   `Invex.Rez/_usings.cs` also declares `InternalsVisibleTo("Invex.Rez.Tests")`.
 - `GenerateDocumentationFile` is on and `CS1591` is enforced for the shipped `src/` projects, so a
@@ -163,7 +163,7 @@ A drift between `_atom/IBuild.cs` and the committed YAML should be treated as a 
   in `*.verified.txt` files as unintentional API/behavior changes. To accept a valid change,
   overwrite the `*.verified.txt` with the matching `*.received.txt`, delete the received file,
   and re-run `dotnet test`.
-- CI runs the tests on `net10.0` on Ubuntu and Windows, plus `net48`
+- CI runs the tests on `net10.0` and `net11.0` on Ubuntu and Windows, plus `net48`
   on Windows — keep tests free of platform- and TFM-specific assumptions.
 - Verify snapshot files use LF (`\n`) line endings. A snapshot mismatch writes a
   `*.received.txt` file next to the committed `*.verified.txt`; fix unintended diffs in code, or
